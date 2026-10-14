@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Econ Test Revision</title>
+<style>
+:root{
+  --paper:#f4efe4; --card:#fffdf7; --ink:#1b2130; --muted:#5d6577; --line:#ddd3c0; --soft:#ece5d6;
+  --micro:#0d7a78; --micro-soft:rgba(13,122,120,.10);
+  --macro:#cc4458; --macro-soft:rgba(204,68,88,.09);
+  --gold:#e09f2d; --gold-soft:rgba(224,159,45,.16); --hl:rgba(240,180,60,.38);
+  --good:#258a4f; --bad:#c23b2e;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --accent:var(--micro); --accent-soft:var(--micro-soft);
+}
+:root[data-theme="dark"]{
+  --paper:#13151b; --card:#1c1f28; --ink:#ebe5d8; --muted:#9ba2b1; --line:#323746; --soft:#262a35;
+  --micro:#3fc2bc; --micro-soft:rgba(63,194,188,.12);
+  --macro:#ff7083; --macro-soft:rgba(255,112,131,.11);
+  --gold:#f0be5c; --gold-soft:rgba(240,190,92,.14); --hl:rgba(240,190,92,.30);
+  --good:#4cc47e; --bad:#ff6b5e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+body.macro{--accent:var(--macro);--accent-soft:var(--macro-soft)}
+body.practice{--accent:var(--gold);--accent-soft:var(--gold-soft)}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.2;margin:0}
+
+/* ---------- layout ---------- */
+.app{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1.5px solid var(--line);padding:22px 16px 30px;background:var(--paper)}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.ring{width:54px;height:54px;flex:none}
+.ring circle{fill:none;stroke-width:6}
+.ring .bg{stroke:var(--soft)} .ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.ring text{font:700 13px var(--sans);fill:var(--ink)}
+.brand h1{font-size:19px} .brand p{margin:0;font-size:12.5px;color:var(--muted)}
+.navgroup{margin-top:16px}
+.navgroup h5{margin:0 0 6px 8px;font:700 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.navgroup button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:0;background:none;padding:7px 9px;border-radius:9px;cursor:pointer;font-size:14px;color:var(--ink)}
+.navgroup button:hover{background:var(--soft)}
+.navgroup button.on{background:var(--card);box-shadow:inset 3px 0 0 var(--accent),0 1px 0 var(--line)}
+.navgroup .code{font:600 11px var(--mono);color:var(--muted);min-width:38px}
+.navgroup .tick{margin-left:auto;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;font-size:10px;color:#fff}
+.navgroup .tick.done{background:var(--good);border-color:var(--good)}
+.nav-micro .code{color:var(--micro)} .nav-macro .code{color:var(--macro)} .nav-prac .code{color:var(--gold)}
+.tools{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.pill{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.pill:hover{border-color:var(--accent)}
+.pill.active{background:var(--accent);border-color:var(--accent);color:#fff}
+main{padding:34px 40px 80px;min-width:0}
+.wrap{max-width:860px;margin:0 auto}
+.topbar{display:none}
+
+/* ---------- page ---------- */
+.page{display:none;animation:rise .35s ease}
+.page.show{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font:700 12px var(--mono);letter-spacing:.06em;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
+.page>h2{font-size:clamp(28px,4vw,40px);margin:12px 0 6px;letter-spacing:-.01em}
+.lede{color:var(--muted);margin:0 0 22px;font-size:15.5px}
+.page h3{font-size:22px;margin:34px 0 12px;display:flex;align-items:baseline;gap:10px}
+.page h3 .n{font:700 12px var(--mono);color:var(--accent)}
+.page h4{font-size:17px;margin:20px 0 8px}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:22px}
+li{margin:4px 0}
+li::marker{color:var(--accent)}
+strong{font-weight:700}
+.k{background:linear-gradient(transparent 58%,var(--hl) 58%);font-weight:650;padding:0 1px}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:18px 20px;margin:14px 0}
+.card.ink{border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid2>.card,.grid3>.card{margin:0}
+
+/* definitions */
+.def{border-left:4px solid var(--accent);background:var(--card);border-radius:0 12px 12px 0;padding:12px 16px;margin:12px 0;position:relative}
+.def .term{font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--accent);display:block;margin-bottom:3px}
+.def .body{transition:filter .25s,opacity .25s}
+body.recall .def .body{filter:blur(6px);opacity:.55;cursor:pointer;user-select:none}
+body.recall .def.peek .body{filter:none;opacity:1}
+body.recall .def::after{content:"tap to reveal";position:absolute;right:12px;top:10px;font:600 10.5px var(--mono);color:var(--muted)}
+body.recall .def.peek::after{content:""}
+
+.box{border-radius:12px;padding:12px 16px 10px;margin:14px 0;border:1.5px dashed}
+.box .lab{font:700 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px}
+.tip{border-color:var(--gold);background:var(--gold-soft)} .tip .lab{color:var(--gold)}
+.trap{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent)} .trap .lab{color:var(--bad)}
+.eval{border-color:var(--accent);background:var(--accent-soft)} .eval .lab{color:var(--accent)}
+
+.formula{font:600 15px var(--mono);background:var(--soft);border-radius:10px;padding:10px 14px;margin:10px 0;overflow-x:auto;white-space:nowrap}
+.formula .eq{color:var(--accent)}
+
+table{border-collapse:collapse;width:100%;font-size:14.5px;margin:10px 0}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--soft)}
+.tbl{overflow-x:auto;border:1.5px solid var(--line);border-radius:12px;margin:12px 0}
+.tbl table{margin:0}
+.tbl tr:last-child td{border-bottom:0}
+
+.chain{list-style:none;padding:0;margin:10px 0;counter-reset:c}
+.chain li{position:relative;padding:8px 12px 8px 40px;background:var(--card);border:1px solid var(--line);border-radius:10px;margin:0 0 18px}
+.chain li::before{counter-increment:c;content:counter(c);position:absolute;left:10px;top:8px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font:700 11px/20px var(--mono);text-align:center}
+.chain li:not(:last-child)::after{content:"↓";position:absolute;left:15px;bottom:-19px;color:var(--accent);font-weight:700}
+
+details{background:var(--card);border:1.5px solid var(--line);border-radius:12px;margin:10px 0;padding:0 16px}
+details[open]{padding-bottom:10px}
+summary{cursor:pointer;padding:12px 0;font-weight:650;list-style:none;display:flex;gap:10px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font:700 16px var(--mono);color:var(--accent);width:14px}
+details[open]>summary::before{content:"–"}
+
+.tag{display:inline-block;font:700 11px var(--mono);padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--muted);margin-right:4px}
+.tag.mi{background:var(--micro-soft);color:var(--micro)} .tag.ma{background:var(--macro-soft);color:var(--macro)}
+
+/* interactive */
+.lab-panel{background:var(--card);border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);border-radius:16px;padding:16px 18px;margin:18px 0}
+.lab-panel .head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.lab-panel .head b{font-family:var(--serif);font-size:18px}
+.chip{font:700 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;background:var(--accent);color:#fff;padding:3px 8px;border-radius:6px}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.btn{border:1.5px solid var(--line);background:var(--paper);border-radius:9px;padding:6px 10px;font-size:13px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.diagram{width:100%;max-width:520px;display:block;margin:6px auto}
+.diagram text{font-family:var(--sans);fill:var(--ink)}
+.caption{background:var(--soft);border-radius:10px;padding:10px 14px;font-size:14.5px;min-height:48px}
+.caption b{color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:8px 0}
+.calc label{font-size:12.5px;color:var(--muted);display:block}
+.calc input,.inp{width:100%;padding:8px 10px;border:1.5px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);font:600 15px var(--mono)}
+.calc input:focus,.inp:focus{outline:none;border-color:var(--accent)}
+.out{font:600 15px var(--mono);background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin-top:8px}
+.out .big{font-size:22px;color:var(--accent)}
+.cpi-tbl input{width:80px;padding:5px 6px;font:600 14px var(--mono);border:1.5px solid var(--line);border-radius:7px;background:var(--paper);color:var(--ink)}
+
+/* sorter */
+.sort-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;margin:8px 0;background:var(--paper);flex-wrap:wrap}
+.sort-item .st{flex:1 1 300px;font-size:14.5px}
+.sort-item.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 9%,transparent)}
+.sort-item.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent)}
+.sort-item .why{flex-basis:100%;font-size:13px;color:var(--muted);display:none}
+.sort-item.right .why,.sort-item.wrong .why{display:block}
+
+/* footer nav */
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:40px;padding-top:20px;border-top:1.5px solid var(--line);flex-wrap:wrap}
+.pager button{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;cursor:pointer;text-align:left;max-width:48%}
+.pager button:hover{border-color:var(--accent)}
+.pager small{display:block;font:600 11px var(--mono);color:var(--muted)}
+.nailed{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:28px}
+.nailbtn{border:2px solid var(--good);color:var(--good);background:transparent;border-radius:999px;padding:9px 18px;font-weight:700;cursor:pointer}
+.nailbtn.done{background:var(--good);color:#fff}
+
+/* flashcards */
+.fc-stage{perspective:1200px;margin:14px auto;max-width:560px}
+.fc{position:relative;height:270px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,.7,.3,1);cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.fc .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;border:1.5px solid var(--ink);box-shadow:5px 5px 0 var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:22px 26px;text-align:center;background:var(--card)}
+.fc .back{transform:rotateY(180deg);background:var(--soft)}
+.fc .front h4{font-size:26px;margin:0}
+.fc .back p{font-size:15.5px;margin:0}
+.fc .corner{position:absolute;top:12px;left:14px;font:700 11px var(--mono);color:var(--muted)}
+.fc-ctrl{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+
+/* quiz */
+.q{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+.q .qt{font-weight:650;margin-bottom:10px}
+.q .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:9px 12px;margin:6px 0;cursor:pointer;font-size:14.5px}
+.q .opt:hover:not([disabled]){border-color:var(--accent)}
+.q .opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+.q .opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.q .ex{display:none;margin-top:8px;font-size:14px;background:var(--soft);border-radius:10px;padding:10px 12px}
+.q.answered .ex{display:block}
+.scorebar{position:sticky;top:0;z-index:5;background:var(--paper);padding:10px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1.5px solid var(--line)}
+.meter{flex:1;height:10px;background:var(--soft);border-radius:99px;overflow:hidden;min-width:120px}
+.meter i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+.streak{font:700 13px var(--mono)}
+
+.toast{opacity:0;position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:600;transition:transform .3s;z-index:50;font-size:14px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* home */
+.hero{padding:26px 26px;border-radius:20px;border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);background:var(--card);position:relative;overflow:hidden}
+.hero h2{font-size:clamp(30px,5vw,46px);margin:8px 0 10px}
+.hero .blob{position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:var(--gold-soft)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:18px}
+.tile{border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:14px;cursor:pointer;text-align:left;transition:.15s}
+.tile:hover{transform:translateY(-2px);border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.tile .code{font:700 12px var(--mono)}
+.tile.mi .code{color:var(--micro)} .tile.ma .code{color:var(--macro)} .tile.pr .code{color:var(--gold)}
+.tile b{display:block;font-family:var(--serif);font-size:16.5px;margin-top:4px}
+.tile span{font-size:12.5px;color:var(--muted)}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  aside{position:fixed;inset:0 25% 0 0;z-index:40;transform:translateX(-105%);transition:transform .3s;box-shadow:10px 0 30px rgba(0,0,0,.2);height:100%}
+  aside.open{transform:none}
+  .topbar{display:flex;position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1.5px solid var(--line);padding:10px 16px;align-items:center;gap:12px}
+  .topbar button{border:1.5px solid var(--line);background:var(--card);border-radius:9px;padding:6px 10px;cursor:pointer}
+  .topbar b{font-family:var(--serif)}
+  main{padding:22px 16px 60px}
+  .grid2,.grid3{grid-template-columns:1fr}
+}
+@media (max-width:520px){ aside{inset:0 10% 0 0} .pager button{max-width:100%;flex:1 1 100%} }
+@media print{aside,.topbar,.pager,.nailed,.lab-panel .btns{display:none}.page{display:block!important}.app{display:block}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside id="side">
+  <div class="brand">
+    <svg class="ring" viewBox="0 0 60 60"><circle class="bg" cx="30" cy="30" r="25"/><circle class="fg" id="ringfg" cx="30" cy="30" r="25" stroke-dasharray="157.1" stroke-dashoffset="157.1" transform="rotate(-90 30 30)"/><text id="ringtxt" x="30" y="34.5" text-anchor="middle">0%</text></svg>
+    <div><h1>Econ Test</h1><p>Edexcel A · Micro 1.1–1.2 · Macro 2.1</p></div>
+  </div>
+  <div id="nav"></div>
+  <div class="tools">
+    <button class="pill" id="recallBtn" title="Blur every definition so you have to recall it">🙈 Recall mode</button>
+    <button class="pill" id="themeBtn">◐ Theme</button>
+  </div>
+  <p class="small muted" style="margin-top:14px">Tip: turn on Recall mode, say each definition out loud, then tap to check.</p>
+</aside>
+
+<main>
+<div class="topbar"><button id="menuBtn">☰</button><b id="topTitle">Econ Test</b></div>
+<div class="wrap">
+
+<!-- ================= HOME ================= -->
+<section class="page" id="home" data-unit="practice" data-code="⌂" data-title="Start here" data-group="start">
+  <div class="hero">
+    <div class="blob"></div>
+    <span class="eyebrow">40 MARKS · MICRO + MACRO</span>
+    <h2>Everything you need for 40/40.</h2>
+    <p class="muted" style="max-width:560px">Only the spec points on your test. Every section has the definitions, chains of reasoning and diagrams you'll need, plus the traps examiners set. Hit <b>Nailed it</b> at the bottom of each one to fill the ring.</p>
+  </div>
+
+  <h3>What's on the paper</h3>
+  <div class="grid2">
+    <div class="card"><span class="tag mi">MICRO</span><p style="margin-top:8px"><b>Short questions + one 10-marker.</b> Definitions, PPF calcs, shifts vs movements, then an "Examine…" question (KAA + evaluation).</p></div>
+    <div class="card"><span class="tag ma">MACRO</span><p style="margin-top:8px"><b>Short questions + definitions + one 5-marker.</b> Expect calculations (real GDP, % change, CPI, unemployment rates) and an "Explain…" question.</p></div>
+  </div>
+
+  <h3>Sections</h3>
+  <div class="tiles" id="tiles"></div>
+
+  <div class="box tip"><span class="lab">How to use this</span>
+    <ol style="margin:0">
+      <li>Read a section, play with its diagram/calculator.</li>
+      <li>Switch on <b>Recall mode</b> and test yourself on every definition.</li>
+      <li>Do the <b>Flashcards</b> until you've cleared the deck, then the <b>Quiz</b>.</li>
+      <li>Finish with <b>Exam technique</b> and plan the model 10-markers yourself before peeking.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 1.1.1 ================= -->
+<section class="page" id="s111" data-unit="micro" data-code="1.1.1" data-title="Economics as a social science" data-group="micro">
+  <span class="eyebrow">MICRO · 1.1.1</span>
+  <h2>Economics as a social science</h2>
+  <p class="lede">How economists think: models, assumptions and why there's no lab.</p>
+
+  <div class="def"><span class="term">Economics</span><div class="body">The study of how <b>scarce resources</b> are allocated to satisfy <b>unlimited wants</b>. It is a <b>social science</b> because it studies human behaviour.</div></div>
+  <div class="def"><span class="term">Economic model</span><div class="body">A <b>simplified representation of reality</b>, built on assumptions, used to explain relationships between variables and make predictions (e.g. the PPF, demand and supply diagrams).</div></div>
+
+  <h3><span class="n">A</span>Thinking like an economist</h3>
+  <ol class="chain">
+    <li><b>Observe</b> a real-world problem or relationship (e.g. sugary drink consumption is rising).</li>
+    <li><b>Build a model</b>, simplifying reality using <b>assumptions</b>.</li>
+    <li><b>Make a prediction / hypothesis</b> (e.g. a sugar tax will cut consumption).</li>
+    <li><b>Test</b> it against real-world data.</li>
+    <li><b>Refine</b> the model if the evidence doesn't fit, then repeat.</li>
+  </ol>
+  <h4>Why make assumptions?</h4>
+  <ul>
+    <li>Reality is too complex: assumptions <b>simplify</b> so a model is usable.</li>
+    <li>They <b>isolate</b> the relationship between two variables (cause → effect).</li>
+    <li>They make predictions <b>testable</b>.</li>
+  </ul>
+  <p>Common assumptions: agents are <b>rational</b> (consumers maximise utility, firms maximise profit), have <b>perfect information</b>, respond to <b>incentives</b>, and <b>ceteris paribus</b>.</p>
+
+  <h3><span class="n">B</span>Ceteris paribus</h3>
+  <div class="def"><span class="term">Ceteris paribus</span><div class="body">"<b>All other things being equal</b>". Every variable is held constant except the one being studied, so its effect can be isolated.</div></div>
+  <p>Example: <i>a rise in price causes a fall in quantity demanded, ceteris paribus.</i> Without it, a simultaneous rise in income could mean demand rises anyway and the relationship gets hidden.</p>
+  <div class="box tip"><span class="lab">Exam tip</span>Write "ceteris paribus" whenever you explain a cause → effect chain in a model. It shows you know the model's limits.</div>
+
+  <h3><span class="n">C</span>Why economics can't run scientific experiments</h3>
+  <div class="grid2">
+    <div class="card"><b>No controlled lab conditions</b><br><span class="small">In the real world you can't hold all other variables constant. Ceteris paribus is impossible in practice.</span></div>
+    <div class="card"><b>Can't repeat history</b><br><span class="small">Every economic situation is unique. You can't rerun 2008 with a different interest rate.</span></div>
+    <div class="card"><b>Human behaviour is unpredictable</b><br><span class="small">People aren't always rational, are influenced by others, and change behaviour over time.</span></div>
+    <div class="card"><b>Ethical limits</b><br><span class="small">You can't deliberately make people unemployed or poor to test a theory.</span></div>
+  </div>
+  <p style="margin-top:12px">So economists rely on <b>historical data</b>, <b>natural experiments</b> and statistical analysis. As a result, predictions are less certain than in natural sciences.</p>
+  <div class="card ink"><b>Case: the day-care fine</b> (Gneezy &amp; Rustichini, 2000)<br>A nursery fined parents who were late collecting their children. The model assumed people respond to negative incentives, so lateness should fall. In fact, <b>lateness rose</b>: parents treated the fine as a <b>price</b> for extra childcare, which removed their guilt. This shows that assumptions about behaviour can fail, and that's why models need testing.</div>
+  <div class="box eval"><span class="lab">Evaluation angle</span>Models are unrealistic but still <b>useful</b>. They simplify complex reality enough to predict the <i>direction</i> of change, even if not the exact size.</div>
+</section>
+
+<!-- ================= 1.1.2 ================= -->
+<section class="page" id="s112" data-unit="micro" data-code="1.1.2" data-title="Positive & normative statements" data-group="micro">
+  <span class="eyebrow">MICRO · 1.1.2</span>
+  <h2>Positive &amp; normative statements</h2>
+  <p class="lede">Fact vs opinion, and how value judgements drive policy.</p>
+  <div class="grid2">
+    <div class="def" style="margin:0"><span class="term">Positive statement</span><div class="body">An <b>objective</b> statement that can be <b>tested / proved or disproved</b> using evidence. It does <b>not</b> have to be true.<br><span class="small muted">e.g. "A sugar tax will reduce consumption of sugary drinks."</span></div></div>
+    <div class="def" style="margin:0"><span class="term">Normative statement</span><div class="body">A <b>subjective</b> statement based on <b>opinion / value judgements</b>. It <b>cannot be tested</b>.<br><span class="small muted">e.g. "The government should introduce a sugar tax."</span></div></div>
+  </div>
+  <div class="box trap"><span class="lab">Exam traps</span>
+    <ul style="margin:0">
+      <li>A <b>false</b> statement can still be positive: "UK unemployment is 50%" is wrong, but it's testable.</li>
+      <li>Normative signal words: <b>should, ought, fair, unfair, better, too high, too low, unacceptable, most important</b>.</li>
+      <li>Positive signal words: <b>will, is, was, causes, leads to</b>, plus numbers and data.</li>
+      <li>A normative statement can include a fact: "Inflation of 4% is <u>too high</u>" is still normative.</li>
+    </ul>
+  </div>
+
+  <h3><span class="n">A</span>Value judgements</h3>
+  <div class="def"><span class="term">Value judgement</span><div class="body">A view about what is <b>good or bad / right or wrong</b>, based on personal beliefs and opinions rather than evidence.</div></div>
+  <h4>Their role in decision-making and policy</h4>
+  <ul>
+    <li><b>Positive economics</b> predicts the <i>effects</i> of a policy. <b>Normative judgements</b> then decide whether those effects are <i>desirable</i>.</li>
+    <li>They decide <b>which objective to prioritise</b>, e.g. low inflation vs low unemployment, or growth vs the environment.</li>
+    <li><b>Same evidence, different policies</b>: raising the minimum wage helps low-paid workers (equity) but may cost some jobs. Whether that trade-off is "worth it" is a value judgement.</li>
+    <li>Policy is ultimately decided by <b>politicians</b>, whose values reflect their party and voters.</li>
+    <li>Even economists make value judgements in <b>what they choose to study</b> and how they interpret data, so analysis is never 100% objective.</li>
+  </ul>
+  <div class="card"><b>Worked example: sugar tax (Soft Drinks Industry Levy, 2018)</b><br>
+  <span class="tag">Positive</span> "Manufacturers cut sugar content in response to the levy." This is testable, and the evidence supports it.<br>
+  <span class="tag">Normative</span> "The government is right to restrict consumer choice to improve public health." This is a value judgement about the role of the state.</div>
+
+  <div class="lab-panel">
+    <div class="head"><b>Sort it: positive or normative?</b><span class="chip">Game</span></div>
+    <div id="sorter"></div>
+    <div class="out" id="sortScore">Score: 0 / 0</div>
+  </div>
+</section>
+
+<!-- ================= 1.1.3 ================= -->
+<section class="page" id="s113" data-unit="micro" data-code="1.1.3" data-title="The economic problem" data-group="micro">
+  <span class="eyebrow">MICRO · 1.1.3</span>
+  <h2>The economic problem</h2>
+  <p class="lede">Scarcity, resources and opportunity cost.</p>
+  <div class="def"><span class="term">Scarcity / the economic problem</span><div class="body">Resources are <b>finite</b> but wants are <b>unlimited</b>, so <b>choices</b> must be made about how resources are allocated.</div></div>
+  <p>Every economy must answer: <b>What</b> to produce? <b>How</b> to produce it? <b>For whom</b>?</p>
+
+  <h3><span class="n">A</span>Factors of production (CELL)</h3>
+  <div class="tbl"><table>
+    <tr><th>Factor</th><th>What it is</th><th>Reward</th></tr>
+    <tr><td><b>Capital</b></td><td>Man-made goods used to produce other goods (machinery, factories, roads)</td><td>Interest</td></tr>
+    <tr><td><b>Enterprise</b></td><td>Organises the other factors and takes the <b>risk</b></td><td>Profit</td></tr>
+    <tr><td><b>Land</b></td><td>Natural resources (land, oil, fish, minerals)</td><td>Rent</td></tr>
+    <tr><td><b>Labour</b></td><td>Human effort, physical and mental</td><td>Wages</td></tr>
+  </table></div>
+
+  <h3><span class="n">B</span>Renewable vs non-renewable resources</h3>
+  <div class="grid2">
+    <div class="def" style="margin:0"><span class="term">Renewable</span><div class="body">Can be <b>replenished</b>, so stocks can be maintained if used sustainably. e.g. wind, solar, timber, fish stocks.</div></div>
+    <div class="def" style="margin:0"><span class="term">Non-renewable</span><div class="body"><b>Finite</b>: once used, they cannot be replaced. e.g. oil, coal, natural gas, metals.</div></div>
+  </div>
+  <div class="box trap"><span class="lab">Watch out</span>A renewable resource becomes effectively <b>non-renewable if used faster than it regenerates</b>, e.g. overfishing (North Sea cod) or deforestation. That's why sustainability matters.</div>
+
+  <h3><span class="n">C</span>Opportunity cost</h3>
+  <div class="def"><span class="term">Opportunity cost</span><div class="body">The <b>value of the next best alternative forgone</b> when a choice is made.</div></div>
+  <p>It exists because of scarcity: choosing one thing means giving up another. That's why "<b>there's no such thing as a free lunch</b>". Free school meals still use scarce resources that could have gone elsewhere.</p>
+  <div class="grid3">
+    <div class="card"><span class="tag">Consumers</span><p class="small" style="margin-top:6px">Limited <b>income and time</b>. £60 on a game = trainers forgone. An evening revising = wages from a shift forgone.</p></div>
+    <div class="card"><span class="tag">Producers</span><p class="small" style="margin-top:6px">Limited <b>capital, labour, factory space</b>. Using a factory line for product A means not making B. Reinvesting profit means lower dividends.</p></div>
+    <div class="card"><span class="tag">Government</span><p class="small" style="margin-top:6px">Limited <b>tax revenue</b>. £10bn on the NHS = £10bn less for education or defence, or a tax cut forgone.</p></div>
+  </div>
+  <p style="margin-top:12px"><b>Why it matters:</b> it forces agents to weigh up trade-offs, so resources go to their most valued use. Governments use it to compare the benefits of spending options.</p>
+</section>
+
+<!-- ================= 1.1.4 ================= -->
+<section class="page" id="s114" data-unit="micro" data-code="1.1.4" data-title="Production possibility frontiers" data-group="micro">
+  <span class="eyebrow">MICRO · 1.1.4</span>
+  <h2>Production possibility frontiers</h2>
+  <p class="lede">The most-tested diagram in Theme 1. Know every point and every shift.</p>
+  <div class="def"><span class="term">PPF</span><div class="body">A curve showing the <b>maximum possible combinations of two goods</b> an economy can produce when <b>all resources are fully and efficiently employed</b>, given current technology.</div></div>
+
+  <div class="lab-panel">
+    <div class="head"><b>PPF lab</b><span class="chip">Interactive</span></div>
+    <div class="btns" id="ppfBtns"></div>
+    <svg class="diagram" id="ppfSvg" viewBox="0 0 440 330" role="img" aria-label="Production possibility frontier diagram"></svg>
+    <div id="ppfSliderWrap"><label class="small muted">Move along the PPF (reallocate resources)</label><input type="range" id="ppfSlider" min="0" max="98" value="50"></div>
+    <div class="caption" id="ppfCap"></div>
+  </div>
+
+  <h3><span class="n">A</span>Reading a PPF</h3>
+  <div class="tbl"><table>
+    <tr><th>Point</th><th>Meaning</th></tr>
+    <tr><td><b>On</b> the PPF</td><td><b>Productively efficient</b>: all resources fully used, max output. Possible.</td></tr>
+    <tr><td><b>Inside</b> the PPF</td><td><b>Productively inefficient</b>: unemployed or wasted resources (e.g. recession). Possible.</td></tr>
+    <tr><td><b>Outside</b> the PPF</td><td><b>Unattainable / unobtainable</b> with current resources and technology.</td></tr>
+  </table></div>
+  <div class="grid2">
+    <div class="def" style="margin:0"><span class="term">Productive efficiency</span><div class="body">Producing at <b>any point on</b> the PPF: max output from resources, no waste.</div></div>
+    <div class="def" style="margin:0"><span class="term">Allocative efficiency</span><div class="body">The <b>one point on</b> the PPF that best matches <b>society's preferences</b>, so resources produce the mix of goods society wants most.</div></div>
+  </div>
+
+  <h3><span class="n">B</span>Opportunity cost &amp; marginal analysis</h3>
+  <p>Moving <b>along</b> the PPF: to produce more of one good, resources must be taken from the other. <b>The OC is the amount of the other good given up.</b></p>
+  <div class="formula">Marginal OC of X <span class="eq">=</span> units of Y lost ÷ units of X gained</div>
+  <div class="tbl"><table>
+    <tr><th>Food</th><th>Clothes</th><th>Change</th><th>Marginal OC of 1 food</th></tr>
+    <tr><td>0</td><td>200</td><td>–</td><td>–</td></tr>
+    <tr><td>50</td><td>150</td><td>+50 F, −50 C</td><td>50/50 = <b>1 clothes</b></td></tr>
+    <tr><td>75</td><td>100</td><td>+25 F, −50 C</td><td>50/25 = <b>2 clothes</b></td></tr>
+    <tr><td>92</td><td>50</td><td>+17 F, −50 C</td><td>50/17 ≈ <b>2.9 clothes</b></td></tr>
+    <tr><td>100</td><td>0</td><td>+8 F, −50 C</td><td>50/8 = <b>6.25 clothes</b></td></tr>
+  </table></div>
+  <p class="small muted">(Data: "Mythica", Theme 1 book.) The OC <b>rises</b> as food production increases. That's why the PPF is curved.</p>
+  <div class="grid2">
+    <div class="card"><b>Concave (bowed out) PPF → increasing OC</b><p class="small" style="margin:6px 0 0">Resources are <b>not equally suited</b> to producing both goods (imperfect factor substitutability). Shift more into food and you start using resources that are good at clothes but poor at food, so you lose more clothes per extra unit of food.</p></div>
+    <div class="card"><b>Straight-line PPF → constant OC</b><p class="small" style="margin:6px 0 0">Resources are <b>perfectly substitutable</b> between the two goods, so every extra unit of X always costs the same amount of Y.</p></div>
+  </div>
+  <div class="box tip"><span class="lab">Why "marginal"?</span>Decisions are made <b>one unit at a time</b>. Agents compare the extra benefit with the extra cost of the next unit, not the total.</div>
+
+  <h3><span class="n">C</span>Movements along vs shifts</h3>
+  <div class="tbl"><table>
+    <tr><th>Change</th><th>What it shows</th><th>Causes</th></tr>
+    <tr><td><b>Movement along</b></td><td>Reallocating resources between the two goods. OC shown.</td><td>Change in priorities / demand.</td></tr>
+    <tr><td><b>Inside → onto</b> PPF</td><td><b>Actual growth</b>: using previously unemployed resources. The PPF does <b>not</b> shift.</td><td>Recovery from recession, falling unemployment.</td></tr>
+    <tr><td><b>Outward shift</b></td><td><b>Potential growth</b>: ↑ productive capacity.</td><td>↑ <b>quantity or quality</b> of factors of production (see below).</td></tr>
+    <tr><td><b>Inward shift</b></td><td><b>Economic decline</b>: ↓ productive capacity.</td><td>Natural disasters, war, depletion of non-renewables, emigration or an ageing workforce, capital not replaced as it depreciates.</td></tr>
+    <tr><td><b>Pivot / asymmetric</b></td><td>Capacity rises for <b>one good only</b>.</td><td>New technology specific to one industry.</td></tr>
+  </table></div>
+  <h4>Causes of an outward shift (↑ quantity or quality of CELL)</h4>
+  <ul>
+    <li><b>Investment</b> in capital goods (machinery, infrastructure)</li>
+    <li><b>New technology</b> / better production methods</li>
+    <li><b>Education &amp; training</b> → better quality labour (human capital)</li>
+    <li><b>Larger labour force</b>: net immigration, higher birth rate, more people entering work</li>
+    <li><b>Discovery of new resources</b> (e.g. North Sea oil)</li>
+    <li><b>Specialisation / division of labour</b> → higher productivity</li>
+  </ul>
+
+  <h3><span class="n">D</span>Capital goods vs consumer goods</h3>
+  <div class="grid2">
+    <div class="def" style="margin:0"><span class="term">Consumer goods</span><div class="body">Goods bought to satisfy wants <b>directly</b> (food, phones, clothes).</div></div>
+    <div class="def" style="margin:0"><span class="term">Capital goods</span><div class="body">Goods used to <b>produce other goods</b> (machinery, factories, roads). Creating them is <b>investment</b>.</div></div>
+  </div>
+  <svg class="diagram" id="capSvg" viewBox="0 0 520 250" role="img" aria-label="Two PPFs comparing a country that invests more in capital goods"></svg>
+  <ol class="chain">
+    <li>Country A puts more resources into <b>capital goods</b> today, so fewer consumer goods are produced.</li>
+    <li>Opportunity cost = <b>consumption and living standards today</b>.</li>
+    <li>More capital → higher productivity → PPF shifts out <b>further</b> in future.</li>
+    <li>A can consume <b>more of both goods</b> in the long run than B. It's a trade-off between now and the future.</li>
+  </ol>
+</section>
+
+<!-- ================= 1.1.5 ================= -->
+<section class="page" id="s115" data-unit="micro" data-code="1.1.5" data-title="Specialisation & division of labour" data-group="micro">
+  <span class="eyebrow">MICRO · 1.1.5</span>
+  <h2>Specialisation &amp; the division of labour</h2>
+  <p class="lede">Adam Smith, pros and cons for firms and countries, and the functions of money.</p>
+  <div class="def"><span class="term">Specialisation</span><div class="body">When an individual, firm, region or country <b>concentrates on producing a limited range of goods or services</b>.</div></div>
+  <div class="def"><span class="term">Division of labour</span><div class="body">Breaking a production process into <b>separate tasks</b>, with each worker doing one task. It's specialisation at the level of the <b>individual worker</b>.</div></div>
+
+  <div class="card ink"><b>Adam Smith: The Wealth of Nations (1776), the pin factory</b><br>
+  One worker doing every step "could scarce make one pin a day, and certainly not twenty". Splitting pin-making into <b>~18 distinct operations</b> let <b>10 workers make ~48,000 pins a day</b> (≈4,800 each). Smith argued the division of labour is the key source of productivity, growth and the "wealth of nations".</div>
+
+  <h3><span class="n">A</span>Division of labour in organising production</h3>
+  <div class="grid2">
+    <div class="card"><b style="color:var(--good)">Advantages</b>
+      <ul class="small" style="margin-top:6px">
+        <li><b>Practice makes perfect</b>: repetition → skill, speed, accuracy → ↑ <b>productivity</b> (output per worker per hour).</li>
+        <li><b>No time lost switching</b> tasks or tools.</li>
+        <li>Simple tasks are easier to <b>mechanise / automate</b>.</li>
+        <li><b>Lower training costs</b>: each worker learns one task, and recruitment is easier.</li>
+        <li>Workers can be matched to the tasks they're <b>best</b> at.</li>
+        <li>↑ output → <b>lower average costs</b> → lower prices / higher profits, more competitive.</li>
+      </ul></div>
+    <div class="card"><b style="color:var(--bad)">Disadvantages</b>
+      <ul class="small" style="margin-top:6px">
+        <li><b>Boredom / alienation</b> from repetition → lower motivation, mistakes, absenteeism, higher labour turnover → productivity can <b>fall</b>.</li>
+        <li><b>Interdependence</b>: one absent worker, strike or broken machine can halt the whole line.</li>
+        <li><b>Narrow skills</b> → occupational immobility → <b>structural unemployment</b> if the task is automated.</li>
+        <li><b>Standardised products</b>: less variety, loss of craft skills.</li>
+      </ul></div>
+  </div>
+
+  <h3><span class="n">B</span>Specialising in production to trade (countries)</h3>
+  <div class="grid2">
+    <div class="card"><b style="color:var(--good)">Advantages</b>
+      <ul class="small" style="margin-top:6px">
+        <li>Countries specialise where they have the <b>lowest opportunity cost</b>, so <b>world output rises</b> (combined PPFs effectively shift out).</li>
+        <li><b>Economies of scale</b>: bigger markets → lower average costs → lower prices.</li>
+        <li><b>More choice and variety</b> for consumers via imports.</li>
+        <li><b>Competition</b> → efficiency and innovation.</li>
+        <li>Access to goods and resources a country can't produce (e.g. UK imports bananas, oil).</li>
+      </ul></div>
+    <div class="card"><b style="color:var(--bad)">Disadvantages</b>
+      <ul class="small" style="margin-top:6px">
+        <li><b>Over-dependence</b> on imports → vulnerable to supply shocks (e.g. Europe's reliance on Russian gas in 2022, PPE shortages in COVID).</li>
+        <li>Vulnerable to a <b>fall in world demand/price</b> for the specialised good (economies reliant on one commodity like oil).</li>
+        <li><b>Structural unemployment</b> when industries decline due to foreign competition (UK coal, steel).</li>
+        <li><b>Trade barriers</b> or exchange-rate swings can block the gains.</li>
+        <li><b>Transport costs</b> and environmental damage from shipping.</li>
+      </ul></div>
+  </div>
+
+  <h3><span class="n">C</span>Functions of money</h3>
+  <p>Specialisation only works if people can <b>trade surpluses</b>. Under <b>barter</b> you need a <b>double coincidence of wants</b> (each side must want what the other has), which is inefficient. Money solves this.</p>
+  <div class="grid2">
+    <div class="def" style="margin:0"><span class="term">Medium of exchange</span><div class="body">Generally accepted in exchange for goods and services. Removes the need for a double coincidence of wants.</div></div>
+    <div class="def" style="margin:0"><span class="term">Measure of value (unit of account)</span><div class="body">Values of different goods can be expressed and compared in one common unit (prices).</div></div>
+    <div class="def" style="margin:0"><span class="term">Store of value</span><div class="body">Holds purchasing power over time, so it can be saved and spent later. (Weakened by inflation.)</div></div>
+    <div class="def" style="margin:0"><span class="term">Method of deferred payment</span><div class="body">Allows debts to be settled in the future in an agreed money amount (loans, credit).</div></div>
+  </div>
+  <div class="box tip"><span class="lab">Mnemonic</span><b>M</b>edium · <b>M</b>easure · <b>S</b>tore · <b>D</b>eferred: "<b>M</b>y <b>M</b>oney <b>S</b>tays <b>D</b>eposited".</div>
+</section>
+
+<!-- ================= 1.2.1 ================= -->
+<section class="page" id="s121" data-unit="micro" data-code="1.2.1" data-title="Rational decision making" data-group="micro">
+  <span class="eyebrow">MICRO · 1.2.1</span>
+  <h2>Rational decision making</h2>
+  <p class="lede">The assumptions behind demand and supply.</p>
+  <div class="def"><span class="term">Rational economic decision making</span><div class="body">Economic agents use available information to make choices that <b>maximise their own benefit</b>, weighing up costs and benefits at the margin.</div></div>
+  <div class="grid2">
+    <div class="card"><span class="tag mi">CONSUMERS</span><h4 style="margin-top:8px">Aim to maximise utility</h4>
+      <p class="small"><b>Utility</b> = satisfaction from consuming a good or service. With a <b>limited income</b>, consumers allocate spending to get the <b>highest total utility</b>.</p>
+      <p class="small">They keep buying while the extra satisfaction (marginal utility) of the next unit is worth at least its price. They spread income so the <b>last £ spent on each good gives equal marginal utility</b>.</p></div>
+    <div class="card"><span class="tag mi">FIRMS</span><h4 style="margin-top:8px">Aim to maximise profit</h4>
+      <div class="formula" style="font-size:13.5px">Profit = Total Revenue − Total Cost</div>
+      <p class="small">Firms produce what consumers want at the <b>lowest cost</b>, and expand output as long as each extra unit adds more to revenue than to cost.</p></div>
+  </div>
+  <p style="margin-top:14px"><b>Why assume it?</b> It makes behaviour <b>predictable</b>, so we can model it: higher price → consumers buy less (law of demand), firms supply more (law of supply).</p>
+  <div class="box eval"><span class="lab">Evaluation: is it realistic?</span>
+    <ul style="margin:0" class="small">
+      <li><b>Imperfect information</b>: consumers rarely know all prices and options.</li>
+      <li><b>Bounded rationality</b>: limited time and brainpower, so people use rules of thumb.</li>
+      <li><b>Habits and herd behaviour</b>: people copy others, or stick with defaults and the status quo.</li>
+      <li><b>Firms</b> may pursue other goals: sales or revenue growth, survival, market share, social responsibility, or <b>satisficing</b> (making "enough" profit).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 1.2.2 ================= -->
+<section class="page" id="s122" data-unit="micro" data-code="1.2.2" data-title="Demand" data-group="micro">
+  <span class="eyebrow">MICRO · 1.2.2</span>
+  <h2>Demand</h2>
+  <p class="lede">Movements vs shifts, the conditions of demand, and diminishing marginal utility.</p>
+  <div class="def"><span class="term">Demand</span><div class="body">The quantity of a good or service consumers are <b>willing and able</b> to buy at a given price over a given time period (<b>effective demand</b>).</div></div>
+  <div class="def"><span class="term">Law of demand</span><div class="body">An <b>inverse</b> relationship between price and quantity demanded: as price falls, quantity demanded rises, <b>ceteris paribus</b>.</div></div>
+
+  <div class="lab-panel">
+    <div class="head"><b>Demand lab: shift or movement?</b><span class="chip">Interactive</span></div>
+    <div class="btns" id="dBtns"></div>
+    <svg class="diagram" id="dSvg" viewBox="0 0 440 330" role="img" aria-label="Demand curve diagram"></svg>
+    <div class="caption" id="dCap">Pick a change above.</div>
+  </div>
+
+  <h3><span class="n">A</span>Movement along vs shift</h3>
+  <div class="tbl"><table>
+    <tr><th></th><th>Caused by</th><th>Language</th></tr>
+    <tr><td><b>Movement along</b></td><td>A change in the good's <b>own price only</b></td><td>P↓ → <b>extension</b> of demand (Qd ↑)<br>P↑ → <b>contraction</b> of demand (Qd ↓)</td></tr>
+    <tr><td><b>Shift</b></td><td>A change in <b>any other factor</b> (condition of demand)</td><td>Right = <b>increase</b> in demand<br>Left = <b>decrease</b> in demand</td></tr>
+  </table></div>
+  <div class="box trap"><span class="lab">Exam trap</span>"Price rises so demand falls" is <b>wrong</b>. Price changes alter <b>quantity demanded</b> (a movement), never demand itself. Also: a rise in the price of <b>another</b> good is a condition of demand, so it causes a <b>shift</b>.</div>
+
+  <h3><span class="n">B</span>Conditions of demand (shift factors): <span style="font-family:var(--mono);font-size:17px">PIRATES</span></h3>
+  <div class="tbl"><table>
+    <tr><th>Factor</th><th>Effect</th></tr>
+    <tr><td><b>P</b>opulation</td><td>More consumers, or a change in age structure → ↑ demand for some goods (ageing UK → ↑ demand for care homes).</td></tr>
+    <tr><td><b>I</b>ncome</td><td><b>Normal good</b>: income ↑ → demand ↑ (shift right). <b>Inferior good</b>: income ↑ → demand ↓ (shift left), e.g. value-range food, bus travel.</td></tr>
+    <tr><td><b>R</b>elated goods' prices</td><td><b>Substitute</b> (Coke/Pepsi): price of Pepsi ↑ → demand for Coke ↑. <b>Complement</b> (consoles/games): price of consoles ↑ → demand for games ↓.</td></tr>
+    <tr><td><b>A</b>dvertising</td><td>Successful marketing or brand loyalty → ↑ demand.</td></tr>
+    <tr><td><b>T</b>astes &amp; fashion</td><td>Trends, health news (a sugar health scare → ↓ demand for fizzy drinks).</td></tr>
+    <tr><td><b>E</b>xpectations</td><td>Expect a future price ↑ or shortage → buy now → demand ↑ today (UK fuel panic-buying, 2021).</td></tr>
+    <tr><td><b>S</b>easons / weather</td><td>Ice cream in summer, umbrellas when it rains.</td></tr>
+  </table></div>
+  <p class="small muted">Also: interest rates and credit availability (big purchases like cars and houses), and government regulation.</p>
+
+  <h3><span class="n">C</span>Diminishing marginal utility → downward-sloping demand</h3>
+  <div class="grid2">
+    <div class="def" style="margin:0"><span class="term">Total utility (TU)</span><div class="body">The total satisfaction from consuming all units of a good.</div></div>
+    <div class="def" style="margin:0"><span class="term">Marginal utility (MU)</span><div class="body">The <b>extra</b> satisfaction from consuming <b>one more unit</b>.</div></div>
+  </div>
+  <div class="def"><span class="term">Law of diminishing marginal utility</span><div class="body">As more units of a good are consumed, the <b>marginal utility from each additional unit falls</b>.</div></div>
+  <svg class="diagram" id="muSvg" viewBox="0 0 520 260" role="img" aria-label="Total and marginal utility chart"></svg>
+  <div class="tbl"><table>
+    <tr><th>Glass of water</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+    <tr><td>Total utility</td><td>20</td><td>32</td><td>40</td><td>42</td><td>42</td><td>39</td></tr>
+    <tr><td>Marginal utility</td><td>20</td><td>12</td><td>8</td><td>2</td><td>0</td><td>−3</td></tr>
+  </table></div>
+  <ul class="small">
+    <li>While MU is <b>positive</b>, TU rises (even though MU is falling).</li>
+    <li>TU is at its <b>maximum when MU = 0</b> (point of satiety).</li>
+    <li>MU <b>negative</b> → TU falls (disutility). A rational consumer stops before this, even if the good is free.</li>
+  </ul>
+  <h4>The link to the demand curve (learn this chain)</h4>
+  <ol class="chain">
+    <li>Each extra unit gives <b>less extra satisfaction</b> (diminishing MU).</li>
+    <li>So consumers are <b>willing to pay less</b> for each additional unit.</li>
+    <li>A rational consumer buys a unit only if its <b>MU ≥ price</b>.</li>
+    <li>So they will only buy <b>more if price falls</b>, which gives a <b>downward-sloping demand curve</b>.</li>
+  </ol>
+  <p><b>Other reasons demand slopes down:</b> <b>income effect</b> (price ↓ → real income / purchasing power ↑ → can buy more) and <b>substitution effect</b> (price ↓ → good is relatively cheaper than substitutes → consumers switch to it).</p>
+  <div class="box eval"><span class="lab">Evaluation: exceptions</span><b>Veblen goods</b> (luxury or status goods like designer handbags) can see demand rise as price rises, because a high price signals exclusivity. Also <b>speculative demand</b>: rising house or share prices can increase demand if people expect further rises.</div>
+</section>
+
+<!-- ================= 1.2.4 ================= -->
+<section class="page" id="s124" data-unit="micro" data-code="1.2.4" data-title="Supply" data-group="micro">
+  <span class="eyebrow">MICRO · 1.2.4</span>
+  <h2>Supply</h2>
+  <p class="lede">Movements vs shifts and the conditions of supply.</p>
+  <div class="def"><span class="term">Supply</span><div class="body">The quantity of a good or service producers are <b>willing and able</b> to sell at a given price over a given time period.</div></div>
+  <div class="def"><span class="term">Law of supply</span><div class="body">A <b>positive</b> relationship between price and quantity supplied: as price rises, quantity supplied rises, <b>ceteris paribus</b>.</div></div>
+  <h4>Why the supply curve slopes upwards</h4>
+  <ol class="chain">
+    <li>Price ↑ → producing the good becomes <b>more profitable</b> (profit motive).</li>
+    <li><b>Existing firms expand output</b>, and higher prices cover the rising cost of producing extra units.</li>
+    <li><b>New firms are attracted</b> into the market, and firms switch resources from less profitable products.</li>
+    <li>Quantity supplied ↑ → <b>extension</b> along the supply curve.</li>
+  </ol>
+
+  <div class="lab-panel">
+    <div class="head"><b>Supply lab: shift or movement?</b><span class="chip">Interactive</span></div>
+    <div class="btns" id="sBtns"></div>
+    <svg class="diagram" id="sSvg" viewBox="0 0 440 330" role="img" aria-label="Supply curve diagram"></svg>
+    <div class="caption" id="sCap">Pick a change above.</div>
+  </div>
+
+  <h3><span class="n">A</span>Movement along vs shift</h3>
+  <div class="tbl"><table>
+    <tr><th></th><th>Caused by</th><th>Language</th></tr>
+    <tr><td><b>Movement along</b></td><td>A change in the good's <b>own price</b></td><td>P↑ → <b>extension</b> of supply<br>P↓ → <b>contraction</b> of supply</td></tr>
+    <tr><td><b>Shift</b></td><td>A change in a <b>condition of supply</b></td><td>Right = <b>increase</b> in supply<br>Left = <b>decrease</b> in supply</td></tr>
+  </table></div>
+  <div class="box trap"><span class="lab">Exam trap</span>An increase in supply is a shift to the <b>right</b>, which on the diagram looks like the curve moving <b>down</b>. Don't call it a "fall". Firms now supply more at every price (or the same quantity at a lower price).</div>
+
+  <h3><span class="n">B</span>Conditions of supply: <span style="font-family:var(--mono);font-size:17px">PINTSWC</span></h3>
+  <div class="tbl"><table>
+    <tr><th>Factor</th><th>Effect on supply</th></tr>
+    <tr><td><b>P</b>roductivity</td><td>↑ output per worker → lower unit costs → shift <b>right</b>.</td></tr>
+    <tr><td><b>I</b>ndirect taxes</td><td>e.g. VAT, fuel duty: ↑ costs → shift <b>left</b>.</td></tr>
+    <tr><td><b>N</b>umber of firms</td><td>More firms enter → shift <b>right</b>. Firms leave → shift left.</td></tr>
+    <tr><td><b>T</b>echnology</td><td>Better tech / automation → lower costs → shift <b>right</b>.</td></tr>
+    <tr><td><b>S</b>ubsidies</td><td>Government grant lowers costs → shift <b>right</b>.</td></tr>
+    <tr><td><b>W</b>eather / natural shocks</td><td>Key for agriculture: drought or floods → shift <b>left</b>. Good harvest → right.</td></tr>
+    <tr><td><b>C</b>osts of production</td><td>↑ wages, raw materials, energy → shift <b>left</b> (2022 energy price surge).</td></tr>
+  </table></div>
+  <p class="small muted">Also: <b>producers' expectations</b> (expect a price rise later → may hold back supply now), and the <b>prices of other goods</b> the firm could produce instead (a farmer switching land from wheat to more profitable rapeseed → wheat supply shifts left).</p>
+  <div class="box tip"><span class="lab">Exam tip</span>For any shift question, write the chain: <b>factor → effect on costs / profitability → firms supply more/less at every price → supply shifts right/left</b>. Draw S₁ → S₂ with an arrow and label the axes P and Q.</div>
+</section>
+
+<!-- ================= 2.1.1 ================= -->
+<section class="page" id="s211" data-unit="macro" data-code="2.1.1" data-title="Economic growth" data-group="macro">
+  <span class="eyebrow">MACRO · 2.1.1</span>
+  <h2>Economic growth</h2>
+  <p class="lede">GDP, real vs nominal, GNI, PPP, limitations and happiness.</p>
+  <div class="def"><span class="term">Economic growth (short run / actual)</span><div class="body">An <b>increase in real GDP</b> over time, measured as the <b>% change in real GDP</b> (usually per year or per quarter).</div></div>
+  <div class="def"><span class="term">Gross Domestic Product (GDP)</span><div class="body">The total <b>value of all final goods and services produced within a country's borders</b> over a period of time (usually a year).</div></div>
+  <p class="small muted">GDP can be measured by output, income or expenditure, which are equal in theory. Only <b>final</b> goods count (no double-counting of intermediate goods), and second-hand sales don't count.</p>
+  <div class="formula">Growth rate (%) <span class="eq">=</span> (Real GDP<sub>this yr</sub> − Real GDP<sub>last yr</sub>) ÷ Real GDP<sub>last yr</sub> × 100</div>
+  <div class="def"><span class="term">Recession</span><div class="body"><b>Two consecutive quarters of negative real GDP growth</b>.</div></div>
+
+  <h3><span class="n">A</span>Real vs nominal · total vs per capita · value vs volume</h3>
+  <div class="tbl"><table>
+    <tr><th>Measure</th><th>Definition</th><th>Use</th></tr>
+    <tr><td><b>Nominal GDP</b></td><td>GDP at <b>current prices</b>. Not adjusted for inflation.</td><td>Can rise just because prices rise.</td></tr>
+    <tr><td><b>Real GDP</b></td><td>GDP at <b>constant prices</b>, adjusted for inflation.</td><td>Shows true change in <b>output</b>. Growth is always measured in real terms.</td></tr>
+    <tr><td><b>Total GDP</b></td><td>Whole economy's output.</td><td>Size of the economy.</td></tr>
+    <tr><td><b>GDP per capita</b></td><td>GDP ÷ population.</td><td>Average income per person, a better guide to <b>living standards</b>.</td></tr>
+    <tr><td><b>Value</b></td><td>Measured in money at <b>current prices</b> (= nominal).</td><td>Price × quantity.</td></tr>
+    <tr><td><b>Volume</b></td><td>The <b>physical quantity</b> of output (= real).</td><td>Strips out price changes.</td></tr>
+  </table></div>
+  <div class="formula">Real GDP <span class="eq">=</span> Nominal GDP × (100 ÷ price index)&nbsp;&nbsp;&nbsp;<span class="muted">[base year index = 100]</span></div>
+  <div class="formula">Quick approx: real growth ≈ nominal growth − inflation</div>
+  <div class="box trap"><span class="lab">Exam traps</span>
+    <ul style="margin:0">
+      <li>If <b>population grows faster than real GDP</b>, GDP per capita <b>falls</b> even though GDP rises.</li>
+      <li>A <b>fall in the growth rate</b> (3% → 1%) means GDP is still <b>rising</b>, just more slowly. Only <b>negative</b> growth means GDP is falling.</li>
+      <li>Nominal GDP can rise while real GDP falls (high inflation).</li>
+    </ul>
+  </div>
+
+  <div class="lab-panel">
+    <div class="head"><b>GDP calculator</b><span class="chip">Practice</span></div>
+    <div class="calc">
+      <div><label>Nominal GDP (£bn)</label><input id="gN" type="number" value="2750"></div>
+      <div><label>Price index (base = 100)</label><input id="gP" type="number" value="110"></div>
+      <div><label>Population (millions)</label><input id="gPop" type="number" value="68"></div>
+      <div><label>Last year's real GDP (£bn)</label><input id="gPrev" type="number" value="2450"></div>
+    </div>
+    <div class="out" id="gOut"></div>
+  </div>
+
+  <h3><span class="n">B</span>Gross National Income (GNI)</h3>
+  <div class="def"><span class="term">GNI</span><div class="body"><b>GDP + net income from abroad</b>: income earned by a country's residents from overseas assets and work (profits, interest, dividends, wages), <b>minus</b> income paid out to foreign owners of domestic assets.</div></div>
+  <div class="formula">GNI <span class="eq">=</span> GDP + (income received from abroad − income paid abroad)</div>
+  <ul class="small">
+    <li><b>GNI &gt; GDP</b> when residents own many assets abroad, or many citizens work abroad and send money home.</li>
+    <li><b>GNI &lt; GDP</b> when a lot of domestic output is foreign-owned and profits flow out. <b>Ireland</b> is the classic example: multinationals book huge profits there, inflating GDP well above what residents actually receive.</li>
+    <li>GNI is a better measure of the income actually available to a country's residents.</li>
+  </ul>
+
+  <h3><span class="n">C</span>Comparing growth between countries and over time</h3>
+  <ul>
+    <li>Use <b>real</b> figures to remove inflation, <b>per capita</b> to remove population differences, and <b>PPP</b> to remove exchange-rate and cost-of-living differences.</li>
+    <li><b>Base effect</b>: poorer countries often grow faster in % terms from a low base (catch-up). 3% growth on a large GDP can be a <b>bigger absolute increase</b> than 7% on a small one.</li>
+    <li>Look at <b>trends</b> over several years, not one year, since a single year can be distorted by a shock (e.g. the 2020 COVID collapse, then the rebound in 2021).</li>
+  </ul>
+  <h4>Index numbers</h4>
+  <div class="formula">Index <span class="eq">=</span> (value in year ÷ value in base year) × 100&nbsp;&nbsp;&nbsp;<span class="muted">base year = 100</span></div>
+  <div class="box trap"><span class="lab">The classic trap</span>An index rising from <b>120 to 132</b> is a <b>10% increase</b> ((132−120)/120 × 100), <b>not</b> 12%. You can only read the change straight off when moving from the base year (100). Also: a <b>percentage-point</b> change (2% → 3% = +1pp) is not the same as a <b>percentage</b> change (+50%).</div>
+  <div class="lab-panel">
+    <div class="head"><b>% change &amp; index converter</b><span class="chip">Practice</span></div>
+    <div class="calc">
+      <div><label>Old value / index</label><input id="pcA" type="number" value="120"></div>
+      <div><label>New value / index</label><input id="pcB" type="number" value="132"></div>
+    </div>
+    <div class="out" id="pcOut"></div>
+  </div>
+
+  <h3><span class="n">D</span>Purchasing power parity (PPP)</h3>
+  <div class="def"><span class="term">Purchasing power parity</span><div class="body">An exchange rate that <b>equalises the purchasing power</b> of two currencies: the rate at which the <b>same basket of goods costs the same</b> in both countries. It adjusts GDP for differences in the <b>cost of living</b>.</div></div>
+  <h4>Why not just use market exchange rates?</h4>
+  <ul>
+    <li>Market rates are <b>volatile</b>. They move with speculation and interest rates, so GDP in $ changes even if output doesn't.</li>
+    <li>They reflect <b>traded goods</b> only and ignore the much lower prices of <b>non-traded goods and services</b> (haircuts, rent, food) in poorer countries. So they <b>understate living standards in low-income countries</b>.</li>
+  </ul>
+  <p><b>Effect:</b> PPP-adjusted figures <b>narrow the gap</b> between rich and poor countries. In the Theme 2 book data, Norway's GDP per capita was ~<b>65×</b> India's at market rates but only ~<b>17×</b> using PPP.</p>
+  <p><b>Big Mac index</b> (The Economist): if a Big Mac costs ¥200 in Tokyo and $2 in New York, the PPP rate is $1 = ¥100.</p>
+  <div class="lab-panel">
+    <div class="head"><b>PPP calculator</b><span class="chip">Practice</span></div>
+    <div class="calc">
+      <div><label>Basket price in country A (local currency)</label><input id="ppA" type="number" value="200"></div>
+      <div><label>Same basket in USA ($)</label><input id="ppB" type="number" value="2"></div>
+      <div><label>Country A GDP (local, bn)</label><input id="ppG" type="number" value="100000"></div>
+    </div>
+    <div class="out" id="ppOut"></div>
+  </div>
+
+  <h3><span class="n">E</span>Limitations of GDP to compare living standards</h3>
+  <div class="tbl"><table>
+    <tr><th>Limitation</th><th>Why it matters</th></tr>
+    <tr><td><b>Inequality</b></td><td>GDP per capita is an <b>average</b>. It hides how income is distributed, so a few very rich people can raise it while most are poor.</td></tr>
+    <tr><td><b>Hidden / informal economy</b></td><td>Cash-in-hand work and illegal activity go unrecorded, so GDP is understated (especially in developing countries).</td></tr>
+    <tr><td><b>Non-market output</b></td><td>Subsistence farming, housework, childcare, DIY and volunteering aren't counted. GDP also rises when these move into the market (e.g. more women in paid work, paying for childcare) even if output hasn't changed.</td></tr>
+    <tr><td><b>Leisure &amp; working hours</b></td><td>Two countries with the same GDP per capita can differ hugely in hours worked (US vs Germany).</td></tr>
+    <tr><td><b>Environment / externalities</b></td><td>Pollution and resource depletion aren't subtracted. Growth can lower quality of life.</td></tr>
+    <tr><td><b>"Regrettable" spending</b></td><td>Rebuilding after a disaster, or spending on burglar alarms, raises GDP without making anyone better off (broken window fallacy).</td></tr>
+    <tr><td><b>Composition of output</b></td><td>£1bn on weapons and £1bn on hospitals count the same.</td></tr>
+    <tr><td><b>Quality &amp; variety</b></td><td>Better products and new technology aren't fully captured. A £500 phone today is far better than one in 2010.</td></tr>
+    <tr><td><b>Health, education, happiness</b></td><td>GDP counts <b>spending</b> on healthcare and education, not actual outcomes like life expectancy or literacy.</td></tr>
+    <tr><td><b>Data accuracy &amp; exchange rates</b></td><td>Different collection methods between countries, frequent revisions, and you need <b>PPP</b> to compare across currencies.</td></tr>
+  </table></div>
+  <div class="box tip"><span class="lab">Over time vs between countries</span><b>Over time</b>: adjust for inflation (real) and population (per capita). Watch for quality changes and the shift of activity into the market. <b>Between countries</b>: per capita + PPP, then consider hidden economies, inequality, hours worked and the environment.</div>
+
+  <h3><span class="n">F</span>National happiness &amp; wellbeing</h3>
+  <h4>UK national wellbeing (ONS, since 2010)</h4>
+  <p>The ONS <b>Measuring National Wellbeing</b> programme looks beyond GDP. It asks four <b>personal wellbeing</b> questions, each scored 0–10:</p>
+  <div class="grid2">
+    <div class="card small"><b>1. Life satisfaction</b>: how satisfied are you with your life nowadays?</div>
+    <div class="card small"><b>2. Worthwhile</b>: to what extent do you feel the things you do in your life are worthwhile?</div>
+    <div class="card small"><b>3. Happiness</b>: how happy did you feel yesterday?</div>
+    <div class="card small"><b>4. Anxiety</b>: how anxious did you feel yesterday?</div>
+  </div>
+  <p style="margin-top:10px" class="small">It also tracks wider domains: health, relationships, what we do (work/leisure), where we live, personal finance, the economy, education &amp; skills, governance and the environment.</p>
+
+  <h4>Real incomes and subjective happiness</h4>
+  <div class="def"><span class="term">Easterlin paradox (1974)</span><div class="body">Within a country, <b>richer people are happier</b> than poorer people. But <b>over time</b>, as countries get richer, <b>average happiness does not rise much</b>.</div></div>
+  <ul>
+    <li><b>Diminishing marginal utility of income</b>: at low incomes, extra money buys essentials (food, shelter, healthcare), so happiness rises a lot. At high incomes, each extra £ adds little.</li>
+    <li><b>Relative income matters</b>: people compare themselves with others. If everyone gets richer, nobody feels better off ("keeping up with the Joneses").</li>
+    <li><b>Adaptation</b>: people get used to higher living standards, and their expectations rise.</li>
+    <li>Happiness depends on <b>non-income factors</b>: health, relationships, job security, freedom, community. Growth can also bring longer hours, stress and pollution.</li>
+    <li><b>Kahneman &amp; Deaton (2010)</b>: day-to-day emotional wellbeing in the US rose with income only up to ~<b>$75,000</b> a year.</li>
+  </ul>
+  <div class="box eval"><span class="lab">Evaluation</span>Later studies (e.g. <b>Stevenson &amp; Wolfers</b>, and more recent US data) find happiness <b>keeps rising with income</b> if measured in % terms, and richer countries <i>are</i> on average happier. Also, happiness is <b>self-reported</b> and subjective, so it's hard to compare across people and cultures.</div>
+</section>
+
+<!-- ================= 2.1.2 ================= -->
+<section class="page" id="s212" data-unit="macro" data-code="2.1.2" data-title="Inflation (a–d)" data-group="macro">
+  <span class="eyebrow">MACRO · 2.1.2 a–d</span>
+  <h2>Inflation</h2>
+  <p class="lede">Definitions, calculating CPI, its limitations, and RPI. Causes and effects aren't on your test.</p>
+  <div class="def"><span class="term">Inflation</span><div class="body">A <b>sustained increase in the general price level</b> over time, which means a fall in the <b>purchasing power</b> of money.</div></div>
+  <div class="def"><span class="term">Deflation</span><div class="body">A <b>sustained fall in the general price level</b> (a <b>negative</b> inflation rate).</div></div>
+  <div class="def"><span class="term">Disinflation</span><div class="body">A <b>fall in the rate of inflation</b>. Prices are <b>still rising</b>, just more slowly (e.g. 6% → 3%).</div></div>
+  <div class="box trap"><span class="lab">The trap they always set</span>Inflation falling from 4% to 2% is <b>disinflation, not deflation</b>. Prices are still 2% higher than a year ago. Deflation only happens when the rate goes <b>below 0%</b>. Also: a one-off price rise isn't inflation, because it must be <b>sustained</b> and in the <b>general</b> price level.</div>
+  <p><b>UK target:</b> <b>CPI inflation of 2%</b>, set by the Government and pursued by the Bank of England's Monetary Policy Committee. If inflation is more than <b>1 percentage point</b> away (above 3% or below 1%), the Governor must write an <b>open letter</b> to the Chancellor explaining why. (UK CPI peaked at <b>11.1% in Oct 2022</b>.)</p>
+
+  <h3><span class="n">A</span>How CPI is calculated</h3>
+  <ol class="chain">
+    <li><b>Living Costs and Food Survey</b>: thousands of households record their spending. This decides <b>what goes in the basket</b> (~700 representative goods and services) and each item's <b>weight</b>.</li>
+    <li><b>Weights</b> = the proportion of household spending on each item (bigger share → bigger weight). The basket and weights are <b>updated every year</b> to reflect changing spending (new items in, outdated ones out).</li>
+    <li><b>Price collection</b>: each month, prices of every item are collected from shops across the UK and online.</li>
+    <li>Each item gets a <b>price index</b> relative to the <b>base year (= 100)</b>. CPI averages prices using a <b>geometric mean</b>.</li>
+    <li><b>Multiply each price index by its weight</b>, add them up and divide by the total weights. That gives the <b>weighted price index</b> (CPI).</li>
+    <li><b>Inflation rate</b> = % change in CPI compared with the <b>same month a year earlier</b>.</li>
+  </ol>
+  <div class="formula">Weighted index <span class="eq">=</span> Σ(price index × weight) ÷ Σ weights</div>
+  <div class="formula">Inflation rate <span class="eq">=</span> (CPI<sub>now</sub> − CPI<sub>year ago</sub>) ÷ CPI<sub>year ago</sub> × 100</div>
+  <div class="box tip"><span class="lab">Exam tip</span>Weights might be given out of <b>100</b> or out of <b>1000</b> (the ONS uses parts per 1000). Either way, divide by the total of the weights.</div>
+
+  <div class="lab-panel">
+    <div class="head"><b>CPI calculator</b><span class="chip">Edit any cell</span></div>
+    <div class="tbl cpi-tbl"><table id="cpiTbl">
+      <tr><th>Category</th><th>Weight</th><th>Price index</th><th>Index × weight</th></tr>
+    </table></div>
+    <div class="calc"><div><label>Last year's CPI</label><input id="cpiPrev" type="number" value="100"></div></div>
+    <div class="out" id="cpiOut"></div>
+    <p class="small muted" style="margin:8px 0 0">Try it: raise the housing weight and watch the same price changes produce a different inflation rate.</p>
+  </div>
+
+  <h3><span class="n">B</span>Limitations of CPI</h3>
+  <div class="tbl"><table>
+    <tr><th>Limitation</th><th>Explanation</th></tr>
+    <tr><td><b>Excludes owner-occupier housing costs</b></td><td>No mortgage interest payments or council tax, even though these are a major cost for many households. (CPIH was introduced to fix this.)</td></tr>
+    <tr><td><b>No "average" household</b></td><td>Different groups face different inflation rates. Pensioners and low-income households spend a larger share on <b>food and energy</b>, so in 2022 they faced higher inflation than CPI showed.</td></tr>
+    <tr><td><b>Quality changes</b></td><td>A price rise may reflect a <b>better product</b>, not inflation, so CPI may <b>overstate</b> inflation.</td></tr>
+    <tr><td><b>Substitution bias</b></td><td>When a good's price rises, consumers switch to cheaper alternatives. A fixed basket doesn't fully capture this, so CPI <b>overstates</b> inflation.</td></tr>
+    <tr><td><b>New products enter late</b></td><td>Items only join the basket once widely bought, and the basket is only updated annually.</td></tr>
+    <tr><td><b>Survey / sampling errors</b></td><td>The LCFS relies on households accurately recording spending. Very rich and very poor households are under-represented.</td></tr>
+  </table></div>
+
+  <h3><span class="n">C</span>RPI: the alternative measure</h3>
+  <div class="def"><span class="term">Retail Prices Index (RPI)</span><div class="body">An older measure of inflation (since 1947) that <b>includes housing costs</b> such as <b>mortgage interest payments and council tax</b>, and is calculated using an <b>arithmetic mean</b>.</div></div>
+  <div class="tbl"><table>
+    <tr><th></th><th>CPI</th><th>RPI</th></tr>
+    <tr><td>Mortgage interest &amp; council tax</td><td>❌ Excluded</td><td>✅ Included</td></tr>
+    <tr><td>Averaging method</td><td><b>Geometric</b> mean</td><td><b>Arithmetic</b> mean</td></tr>
+    <tr><td>Coverage</td><td>All households (incl. institutions and foreign visitors' spending)</td><td>Excludes the highest-income households and pensioners mainly on state benefits</td></tr>
+    <tr><td>Typical level</td><td>Lower</td><td>Usually <b>higher</b> ("formula effect" of the arithmetic mean, plus housing costs)</td></tr>
+    <tr><td>Used for</td><td>BoE <b>2% target</b>, uprating benefits and pensions, international comparison</td><td>Index-linked government bonds, student loan interest, some wage bargaining</td></tr>
+  </table></div>
+  <ul class="small">
+    <li>Geometric means are always ≤ arithmetic means, so CPI is typically lower (the formula effect has historically been ~0.5–1 percentage point).</li>
+    <li>RPI lost its "National Statistic" status in 2013, as the ONS considers its formula flawed.</li>
+    <li>When interest rates rise, RPI rises faster than CPI because mortgage costs are included.</li>
+    <li><b>CPIH</b> = CPI + owner-occupiers' housing costs + council tax. It has been the ONS's headline measure since 2017, but the BoE target is still CPI.</li>
+  </ul>
+  <div class="box eval"><span class="lab">Evaluation</span>Using CPI to uprate benefits and RPI for some payments to the government (e.g. student loan interest) benefits the government, since RPI is usually higher. Workers often push for RPI-based pay rises for the same reason.</div>
+</section>
+
+<!-- ================= 2.1.3 ================= -->
+<section class="page" id="s213" data-unit="macro" data-code="2.1.3" data-title="Unemployment (a–c, e)" data-group="macro">
+  <span class="eyebrow">MACRO · 2.1.3 a–c, e</span>
+  <h2>Employment &amp; unemployment</h2>
+  <p class="lede">Measures, underemployment, the three rates, and migration &amp; skills. Causes (d) and effects (f) aren't on your test.</p>
+  <div class="def"><span class="term">Unemployment</span><div class="body">People of working age who are <b>willing and able to work</b> and <b>actively seeking work</b>, but <b>cannot find a job</b>.</div></div>
+
+  <h3><span class="n">A</span>Measuring unemployment</h3>
+  <div class="grid2">
+    <div class="card"><span class="tag ma">MEASURE 1</span><h4 style="margin-top:8px">Claimant count</h4>
+      <p class="small">The number of people <b>claiming unemployment-related benefits</b>: Jobseeker's Allowance + Universal Credit claimants who are <b>required to look for work</b>. Published <b>monthly</b> from administrative data.</p>
+      <p class="small" style="margin:0"><b style="color:var(--good)">+</b> Cheap, quick, monthly, detailed regional data, no sampling error.<br>
+      <b style="color:var(--bad)">−</b> Eligibility rules change often (≈30 times since 1979), so comparisons over time are hard and can be politically manipulated.<br>
+      <b style="color:var(--bad)">−</b> Excludes jobless people who aren't eligible (partner's income or savings too high, most under-18s), or who choose not to claim (stigma, unaware).<br>
+      <b style="color:var(--bad)">−</b> Some claimants work illegally in the hidden economy. Universal Credit also brings in some low-paid workers who must search for more hours, which pushes the count up.</p></div>
+    <div class="card"><span class="tag ma">MEASURE 2</span><h4 style="margin-top:8px">ILO / Labour Force Survey</h4>
+      <p class="small">A large <b>quarterly household survey</b> using the <b>International Labour Organisation</b> definition. Unemployed = aged 16+, <b>without a job</b>, <b>actively sought work in the past 4 weeks</b>, and <b>available to start within 2 weeks</b> (or has found a job and is waiting to start within 2 weeks).</p>
+      <p class="small" style="margin:0"><b style="color:var(--good)">+</b> <b>Internationally agreed definition</b>, so it allows cross-country comparison.<br>
+      <b style="color:var(--good)">+</b> Includes people who can't claim benefits, and isn't affected by benefit rule changes.<br>
+      <b style="color:var(--bad)">−</b> <b>Sampling error</b>. It's a survey, and falling response rates have reduced its reliability in recent years.<br>
+      <b style="color:var(--bad)">−</b> Expensive and slower to publish. Relies on honest answers.<br>
+      <b style="color:var(--bad)">−</b> Anyone doing <b>1+ hour of paid work a week counts as employed</b>, and discouraged workers count as inactive, so it can understate joblessness.</p></div>
+  </div>
+  <div class="box tip"><span class="lab">Why is ILO usually higher than the claimant count?</span>The ILO measure includes jobless people who are <b>not eligible for benefits</b> or <b>choose not to claim</b>: e.g. people whose partner earns too much, people with savings, 16–17 year-olds, students looking for work, and people seeking part-time work.</div>
+
+  <h3><span class="n">B</span>Unemployment vs underemployment</h3>
+  <div class="def"><span class="term">Underemployment</span><div class="body">People who are <b>in work</b> but are <b>not working to their full capacity</b>: either working <b>fewer hours than they want</b> (part-time but want full-time) or in jobs that <b>don't use their skills and qualifications</b>.</div></div>
+  <ul>
+    <li><b>Time-related</b>: a part-timer who wants full-time hours, or someone on a zero-hours contract.</li>
+    <li><b>Skills-related</b>: an engineering graduate working as a delivery driver.</li>
+    <li>The underemployed count as <b>employed</b> in both measures, so headline unemployment <b>understates spare capacity</b> in the labour market.</li>
+    <li>It means wasted resources (the economy is operating <b>inside its PPF</b>), lower incomes and lower tax revenue.</li>
+  </ul>
+
+  <h3><span class="n">C</span>Employment, unemployment &amp; inactivity rates</h3>
+  <div class="grid3">
+    <div class="card small"><b>Employed</b><br>Have a job (incl. part-time, self-employed).</div>
+    <div class="card small"><b>Unemployed</b><br>No job, actively looking, available to start.</div>
+    <div class="card small"><b>Economically inactive</b><br>Not in work and <b>not looking</b> or not available: students, early retirees, long-term sick, carers, discouraged workers.</div>
+  </div>
+  <p style="margin-top:12px"><b>Economically active (the labour force)</b> = employed + unemployed. <b>Working-age population (16–64)</b> = active + inactive.</p>
+  <div class="formula">Employment rate <span class="eq">=</span> employed ÷ working-age population × 100</div>
+  <div class="formula">Unemployment rate <span class="eq">=</span> unemployed ÷ economically active × 100</div>
+  <div class="formula">Inactivity rate <span class="eq">=</span> inactive ÷ working-age population × 100</div>
+  <div class="box trap"><span class="lab">Exam trap: different denominators</span>The unemployment rate divides by the <b>economically active</b>, not the whole working-age population. So employment and unemployment rates can <b>both rise at once</b>, and they don't add up to 100%.</div>
+
+  <div class="lab-panel">
+    <div class="head"><b>Labour market calculator</b><span class="chip">Interactive</span></div>
+    <div class="calc">
+      <div><label>Employed (m)</label><input id="lE" type="number" value="40"></div>
+      <div><label>Unemployed (m)</label><input id="lU" type="number" value="10"></div>
+      <div><label>Inactive (m)</label><input id="lI" type="number" value="50"></div>
+    </div>
+    <div class="btns">
+      <button class="btn" data-lab="mig">+40 migrants (20 employed, 20 unemployed)</button>
+      <button class="btn" data-lab="disc">5 unemployed give up looking</button>
+      <button class="btn" data-lab="back">10 inactive start job-hunting</button>
+      <button class="btn" data-lab="reset">Reset</button>
+    </div>
+    <div class="out" id="lOut"></div>
+    <div class="caption" id="lCap" style="margin-top:8px">Book example: 100 working-age people (40 employed, 10 unemployed, 50 inactive). Try the scenarios.</div>
+  </div>
+
+  <h4>Significance of changes in the rates</h4>
+  <div class="tbl"><table>
+    <tr><th>Change</th><th>Interpretation</th></tr>
+    <tr><td>Unemployment rate ↓</td><td>Usually good, <b>but check why</b>. If people stop looking (discouraged → inactive), the rate falls without anyone finding work. Always look at the employment rate alongside it.</td></tr>
+    <tr><td>Employment rate ↑</td><td>More people working → higher incomes, consumer spending and tax revenue, lower benefit spending, higher output.</td></tr>
+    <tr><td>Employment <b>and</b> unemployment ↑ together</td><td>The labour force is growing: migrants, or inactive people (students, carers) starting to look for work.</td></tr>
+    <tr><td>Inactivity rate ↑</td><td>Smaller labour force → lower productive potential (PPF shifts in) and labour shortages that push up wages. Also lower tax revenue and higher welfare spending. UK inactivity rose after COVID, driven by <b>long-term sickness</b>.</td></tr>
+    <tr><td>Inactivity ↓</td><td>More potential workers. Unemployment may rise at first as they begin searching.</td></tr>
+  </table></div>
+
+  <h3><span class="n">D</span>The significance of migration and skills</h3>
+  <h4>Skills</h4>
+  <ul>
+    <li><b>Skills mismatch</b>: workers' skills don't match what employers need, so <b>vacancies and unemployment exist at the same time</b> (structural unemployment). Examples: the decline of coal and manufacturing, automation and AI replacing routine jobs.</li>
+    <li><b>Occupational immobility</b>: workers can't easily move between jobs because they lack transferable skills or qualifications.</li>
+    <li><b>Higher-skilled workers</b> are more employable, more adaptable and more productive. Low-skilled workers face higher unemployment and are hit first in downturns.</li>
+    <li><b>Skills shortages</b> (e.g. HGV drivers in 2021, nurses, construction) leave vacancies unfilled and limit how much firms can produce.</li>
+    <li>The longer someone is unemployed, the more their <b>skills erode</b>, so it gets harder to find work (long-term unemployment).</li>
+    <li><b>Geographical immobility</b>: high housing costs or family ties stop people moving to where the jobs are, causing regional unemployment.</li>
+  </ul>
+  <h4>Migration</h4>
+  <div class="grid2">
+    <div class="card"><b style="color:var(--good)">Can reduce unemployment / boost employment</b>
+      <ul class="small" style="margin-top:6px">
+        <li>Net inward migration <b>increases the labour force</b>, which raises productive potential (PPF shifts out).</li>
+        <li>Migrants often <b>fill skills shortages</b> (NHS doctors and nurses, care workers, seasonal farm work). That eases bottlenecks so firms can expand, which can <b>create jobs for domestic workers</b> too.</li>
+        <li>Migrants are also <b>consumers</b>. Their spending raises demand, and so jobs. The number of jobs isn't fixed (the "lump of labour" fallacy).</li>
+        <li>Migrants are often <b>working age</b>, which offsets an ageing population and lowers inactivity.</li>
+      </ul></div>
+    <div class="card"><b style="color:var(--bad)">Can raise unemployment / other concerns</b>
+      <ul class="small" style="margin-top:6px">
+        <li>The effect on the unemployment rate <b>depends on whether migrants find work</b>. If many are unemployed, the rate rises (try the calculator).</li>
+        <li>Possible <b>competition for low-skilled jobs</b> and downward pressure on wages in some sectors or areas. Evidence suggests the overall effect is small.</li>
+        <li>Easy access to migrant labour may reduce firms' incentive to <b>train domestic workers</b>.</li>
+        <li><b>Emigration</b> of skilled workers ("brain drain") causes skills shortages in the country they leave.</li>
+      </ul></div>
+  </div>
+  <p class="small muted" style="margin-top:10px">UK context: since 2021 (post-Brexit), a <b>points-based immigration system</b> prioritises skills and salary thresholds, with specific shortage-occupation routes such as health and care.</p>
+</section>
+
+<!-- ================= EXAM TECHNIQUE ================= -->
+<section class="page" id="exam" data-unit="practice" data-code="✎" data-title="Exam technique" data-group="practice">
+  <span class="eyebrow">PRACTICE · EXAM TECHNIQUE</span>
+  <h2>Exam technique</h2>
+  <p class="lede">How the marks are actually given, plus model plans to copy.</p>
+
+  <h3><span class="n">A</span>Definitions (1–2 marks)</h3>
+  <p>Precision earns the marks. Learn the exact wording, using the key words in <span class="k">bold</span> on every definition card. Vague answers ("inflation is when prices go up") lose a mark. Write: <i>"a <b>sustained</b> increase in the <b>general</b> price level"</i>.</p>
+
+  <h3><span class="n">B</span>Supported multiple choice (Edexcel style)</h3>
+  <ul>
+    <li><b>1 mark</b> for the correct letter, plus up to <b>3 marks</b> for the explanation.</li>
+    <li>Explanation marks come from: <b>defining</b> the key term, <b>applying</b> the data or drawing the diagram, and <b>rejecting</b> wrong options (e.g. "B is wrong because a fall in the inflation rate is disinflation, not deflation").</li>
+    <li>Rejection marks still count if you pick the wrong answer, so always explain.</li>
+  </ul>
+
+  <h3><span class="n">C</span>The macro 5-marker ("Explain…")</h3>
+  <p>Marks are typically split across <b>Knowledge</b> (definition), <b>Application</b> (use the data or context) and <b>Analysis</b> (a developed chain of reasoning). No evaluation is needed.</p>
+  <ol class="chain">
+    <li><b>Define</b> the key term(s) precisely.</li>
+    <li><b>Apply</b>: quote or calculate from the data (with units), or use the context given.</li>
+    <li><b>Analyse</b>: explain the point with a <b>because → so → therefore</b> chain. For "explain two…", give two separate, developed points.</li>
+  </ol>
+  <details><summary>Model: "Explain the difference between real and nominal GDP." (5)</summary>
+    <p class="small"><b>K:</b> Nominal GDP is the value of output at <b>current prices</b>, not adjusted for inflation. Real GDP is measured at <b>constant prices</b>, adjusted for inflation, so it shows changes in the <b>volume</b> of output.</p>
+    <p class="small"><b>A:</b> e.g. if nominal GDP rises from £2,000bn to £2,100bn (5%) while inflation is 3%, real GDP has only grown by roughly <b>2%</b>.</p>
+    <p class="small"><b>An:</b> Nominal growth can be driven purely by rising prices, with no extra goods or services produced. So <b>real GDP</b> is used to measure economic growth and changes in living standards. Higher nominal GDP doesn't mean people can consume more.</p>
+  </details>
+  <details><summary>Model: "Explain two limitations of using CPI to measure inflation." (5)</summary>
+    <p class="small"><b>K:</b> CPI is a <b>weighted average of the prices of a basket</b> of ~700 goods and services, with weights from the Living Costs and Food Survey.</p>
+    <p class="small"><b>Limitation 1 (An):</b> CPI <b>excludes owner-occupier housing costs</b> such as mortgage interest and council tax. For homeowners with mortgages, when interest rates rise their cost of living rises faster than CPI shows, so CPI <b>understates</b> the inflation they face.</p>
+    <p class="small"><b>Limitation 2 (An):</b> There is <b>no "average" household</b>. Low-income and pensioner households spend a larger share of income on food and energy. When those prices surged (e.g. 2022), their personal inflation rate was <b>above</b> CPI, so CPI misrepresents their loss of purchasing power.</p>
+  </details>
+  <details><summary>Model: "Explain why the ILO measure of unemployment is usually higher than the claimant count." (5)</summary>
+    <p class="small"><b>K:</b> The claimant count measures people claiming unemployment-related benefits (JSA / Universal Credit, required to seek work). The ILO measure, from the Labour Force Survey, counts people without a job who have <b>looked for work in the past 4 weeks</b> and can <b>start within 2 weeks</b>.</p>
+    <p class="small"><b>An:</b> Many unemployed people are <b>not eligible to claim</b>, e.g. if their partner's income or their savings are too high, or they're 16–17. Others <b>choose not to claim</b> because of stigma or not knowing they're entitled. These people are counted by the ILO survey but not by the claimant count.</p>
+    <p class="small"><b>A:</b> Use any figures given, e.g. "ILO unemployment of 1.6m vs a claimant count of 1.2m, a gap of 0.4m."</p>
+  </details>
+  <details><summary>Model: "Explain why GDP per capita may not accurately compare living standards between two countries." (5)</summary>
+    <p class="small"><b>K:</b> GDP per capita = total value of output ÷ population, i.e. average income per person.</p>
+    <p class="small"><b>An 1:</b> It's an <b>average</b>, so it ignores <b>inequality</b>. A country with high GDP per capita may have most income going to a small elite, so the typical person's living standard is lower than the figure suggests.</p>
+    <p class="small"><b>An 2:</b> Converting at <b>market exchange rates</b> ignores cost-of-living differences. Prices of non-traded goods are much lower in poorer countries, so their living standards are <b>understated</b>. <b>PPP</b>-adjusted figures should be used.</p>
+  </details>
+
+  <h3><span class="n">D</span>The micro 10-marker ("Examine…")</h3>
+  <div class="grid2">
+    <div class="card"><b>KAA: 6 marks</b><p class="small" style="margin:6px 0 0">Knowledge, Application, Analysis. Define terms, <b>use the context</b>, draw a <b>labelled diagram</b> where relevant, and build <b>2 developed chains</b> of reasoning.</p></div>
+    <div class="card"><b>Evaluation: 4 marks</b><p class="small" style="margin:6px 0 0">Make <b>2 developed evaluation points</b> that challenge or qualify your analysis, then give a short <b>justified judgement</b>.</p></div>
+  </div>
+  <p style="margin-top:12px"><b>Structure (~15 min):</b> Definition → KAA point 1 (+ diagram) → KAA point 2 → Evaluation 1 → Evaluation 2 → Judgement.</p>
+  <div class="box tip"><span class="lab">Evaluation starters that always work</span>
+    <ul style="margin:0" class="small">
+      <li><b>It depends on…</b> (size of the change, type of good/firm, whether other factors stay constant)</li>
+      <li><b>Short run vs long run</b>: effects take time, or fade</li>
+      <li><b>Magnitude</b>: how big is the effect really? Use the data</li>
+      <li><b>Ceteris paribus rarely holds</b>: other factors may offset it</li>
+      <li><b>Stakeholders</b>: good for firms, bad for workers? Consumers vs producers</li>
+      <li><b>Prioritise</b>: which point matters most, and why</li>
+    </ul>
+  </div>
+
+  <h4>Model plans: try writing each yourself before opening</h4>
+  <details><summary>"Examine the advantages and disadvantages to a car manufacturer of using the division of labour." (10)</summary>
+    <p class="small"><b>Define:</b> division of labour = splitting production into separate tasks, each done by a different worker (Adam Smith's pin factory: 10 workers, ~48,000 pins/day).</p>
+    <p class="small"><b>KAA 1:</b> Workers repeat one task (e.g. fitting doors) → become more skilled and faster, with no time lost switching tasks → output per worker rises → <b>average cost per car falls</b> → the firm can lower prices or raise profit margins and become more competitive.</p>
+    <p class="small"><b>KAA 2:</b> Simple tasks are easier to mechanise → robots on the production line → further productivity gains. Training is quicker and cheaper since workers only learn one task.</p>
+    <p class="small"><b>Eval 1:</b> Repetition → <b>boredom and alienation</b> → lower motivation, more errors and higher absenteeism and labour turnover. This could <b>offset</b> productivity gains, especially in the long run.</p>
+    <p class="small"><b>Eval 2:</b> <b>Interdependence</b>: one breakdown, absent worker or strike at a single stage halts the whole line. That's costly for a high-volume car plant, since lost output can't easily be recovered.</p>
+    <p class="small"><b>Judgement:</b> The advantages likely dominate for a <b>mass-production</b> firm like a car maker, where economies of scale matter most. But the net benefit <b>depends on</b> managing motivation (e.g. job rotation) and building resilience into the line.</p>
+  </details>
+  <details><summary>"Examine the likely effects on an economy of increasing its production of capital goods." (10)</summary>
+    <p class="small"><b>Define:</b> capital goods are goods used to produce other goods (machinery, infrastructure). Consumer goods satisfy wants directly. <b>Diagram:</b> a PPF of capital vs consumer goods. Show a movement along it towards capital goods, then a larger outward shift in future.</p>
+    <p class="small"><b>KAA 1:</b> In the short run, resources move from consumer to capital goods (a movement along the PPF). The <b>opportunity cost</b> is consumer goods forgone, so current living standards fall.</p>
+    <p class="small"><b>KAA 2:</b> More capital → higher labour productivity → productive capacity rises → <b>PPF shifts outwards</b> (potential growth) → more of <b>both</b> goods can be produced in future, raising long-run living standards.</p>
+    <p class="small"><b>Eval 1:</b> It <b>depends on the quality</b> of investment. Badly chosen projects (e.g. unused infrastructure) won't raise productivity much, and some investment only replaces <b>depreciating</b> capital rather than adding to it.</p>
+    <p class="small"><b>Eval 2:</b> <b>Time lags</b>: the benefits take years to arrive, while the sacrifice is immediate. That's harder for poorer economies, where cutting consumption may push people below subsistence. It also needs workers with the <b>skills</b> to use the new capital.</p>
+    <p class="small"><b>Judgement:</b> Beneficial in the long run if the investment is productive. The size of the gain depends on the type of capital and how well complementary factors (skills, technology) keep up.</p>
+  </details>
+  <details><summary>"Examine two factors that might lead to an increase in demand for electric cars." (10)</summary>
+    <p class="small"><b>Define:</b> demand = quantity consumers are willing and able to buy at each price. An increase in demand = the curve shifts <b>right</b>. <b>Diagram:</b> D₁ → D₂, showing a higher quantity demanded at every price.</p>
+    <p class="small"><b>KAA 1: Rising incomes.</b> Electric cars are <b>normal goods</b> (arguably luxuries). Higher real incomes → more consumers able to afford them → demand shifts right.</p>
+    <p class="small"><b>KAA 2: Price of a related good.</b> A rise in the price of petrol (a <b>complement</b> to petrol cars, which are <b>substitutes</b> for EVs) → petrol cars become more expensive to run → consumers switch to EVs → demand shifts right. Also: changing tastes, as environmental concern rises.</p>
+    <p class="small"><b>Eval 1:</b> Size of the shift <b>depends on</b> how big the income rise is, and whether other factors are holding demand back, such as a lack of charging points (a complement), which could limit the shift.</p>
+    <p class="small"><b>Eval 2:</b> <b>Ceteris paribus rarely holds</b>. Rising interest rates make car finance more expensive, which could offset higher incomes. Expectations of future price falls (as battery tech improves) may also make consumers delay buying.</p>
+    <p class="small"><b>Judgement:</b> Petrol prices and tastes probably matter more than income in the short run. The biggest long-run driver may be complementary infrastructure (charging points).</p>
+  </details>
+  <details><summary>"Examine the costs and benefits to a country of specialising and trading." (10)</summary>
+    <p class="small"><b>Define:</b> specialisation = concentrating on a narrow range of goods and services, then trading surpluses for others.</p>
+    <p class="small"><b>KAA 1:</b> Specialise where opportunity cost is lowest → resources are used more efficiently → <b>total output rises</b> → trade lets the country consume beyond its own PPF → higher living standards.</p>
+    <p class="small"><b>KAA 2:</b> A bigger export market → <b>economies of scale</b> → lower average costs → lower prices for consumers and greater competitiveness. Consumers also gain variety from imports.</p>
+    <p class="small"><b>Eval 1:</b> <b>Over-dependence</b>: a country specialising in one commodity (e.g. oil) is vulnerable to a collapse in world prices. Reliance on imports makes it vulnerable to supply shocks (Europe's dependence on Russian gas, 2022).</p>
+    <p class="small"><b>Eval 2:</b> <b>Structural unemployment</b>: industries that can't compete decline (UK coal and steel), and workers with narrow skills struggle to find new jobs. Gains also depend on low <b>trade barriers</b> and transport costs.</p>
+    <p class="small"><b>Judgement:</b> Net benefits are usually positive, but greatest for countries that <b>diversify</b> across several specialisms and support workers to retrain.</p>
+  </details>
+  <details><summary>"Examine factors that may cause the supply of wheat to decrease." (10)</summary>
+    <p class="small"><b>Define:</b> supply = quantity producers are willing and able to sell at each price. A decrease = the curve shifts <b>left</b>. <b>Diagram:</b> S₁ → S₂ (leftward).</p>
+    <p class="small"><b>KAA 1: Weather.</b> Drought or flooding → smaller harvest → less wheat available at every price → supply shifts left (e.g. 2018 European drought).</p>
+    <p class="small"><b>KAA 2: Rising costs of production.</b> Higher fertiliser and energy prices (gas is a key fertiliser input, and its price surged in 2022) → each tonne costs more to produce → lower profit at each price → farmers supply less → shift left. An indirect tax would work the same way.</p>
+    <p class="small"><b>Eval 1:</b> <b>Magnitude and time</b>: weather shocks are often temporary (one season), while cost increases may persist. Farmers can also store wheat to smooth supply.</p>
+    <p class="small"><b>Eval 2:</b> Offsetting factors: <b>technology</b> (drought-resistant seeds) or <b>government subsidies</b> could shift supply back right. Global supply also depends on many countries, so a local shock may matter less.</p>
+    <p class="small"><b>Judgement:</b> Weather causes the largest short-run shifts, but sustained cost increases matter most over time.</p>
+  </details>
+</section>
+
+<!-- ================= FLASHCARDS ================= -->
+<section class="page" id="flash" data-unit="practice" data-code="⟳" data-title="Flashcards" data-group="practice">
+  <span class="eyebrow">PRACTICE · FLASHCARDS</span>
+  <h2>Flashcards</h2>
+  <p class="lede">Say the definition out loud, flip, then be honest. Cards you mark "Again" come back.</p>
+  <div class="btns" id="fcFilter" style="justify-content:center">
+    <button class="btn on" data-f="all">All</button><button class="btn" data-f="micro">Micro</button><button class="btn" data-f="macro">Macro</button>
+  </div>
+  <div class="fc-stage"><div class="fc" id="fc"><div class="face front"><span class="corner" id="fcCorner"></span><h4 id="fcFront"></h4><p class="small muted" style="margin-top:12px">tap / space to flip</p></div><div class="face back"><span class="corner">definition</span><p id="fcBack"></p></div></div></div>
+  <div class="fc-ctrl">
+    <button class="btn" id="fcAgain">↺ Again</button>
+    <button class="btn primary" id="fcFlip">Flip</button>
+    <button class="btn" id="fcGot">✓ Got it</button>
+    <button class="btn" id="fcShuffle">⤨ Shuffle</button>
+  </div>
+  <p class="out" id="fcStat" style="text-align:center;margin-top:14px"></p>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section class="page" id="quiz" data-unit="practice" data-code="?" data-title="Quiz" data-group="practice">
+  <span class="eyebrow">PRACTICE · QUIZ</span>
+  <h2>Quiz</h2>
+  <p class="lede">Exam-style multiple choice and calculations, each with an explanation. Keep a pen handy for the calcs.</p>
+  <div class="scorebar">
+    <div class="btns" id="qFilter" style="margin:0">
+      <button class="btn on" data-f="all">All</button><button class="btn" data-f="micro">Micro</button><button class="btn" data-f="macro">Macro</button>
+    </div>
+    <div class="meter"><i id="qMeter"></i></div>
+    <span class="streak" id="qScore">0/0</span>
+    <span class="streak" id="qStreak">🔥 0</span>
+    <button class="btn" id="qReset">Reset</button>
+  </div>
+  <div id="qList"></div>
+</section>
+
+<div class="pager" id="pager"></div>
+<div class="nailed" id="nailWrap"><button class="nailbtn" id="nailBtn">✓ Nailed it</button></div>
+
+</div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const fmt=(n,d=2)=>isFinite(n)?Number(n).toLocaleString('en-GB',{maximumFractionDigits:d,minimumFractionDigits:0}):'—';
+const NS='http://www.w3.org/2000/svg';
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),1800)}
+
+/* ---------------- theme & recall ---------------- */
+const root=document.documentElement;
+let theme=store.get('econTheme',null);
+if(!theme){theme=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}
+root.setAttribute('data-theme',theme);
+$('#themeBtn').onclick=()=>{theme=theme==='dark'?'light':'dark';root.setAttribute('data-theme',theme);store.set('econTheme',theme);redrawAll()};
+$('#recallBtn').onclick=e=>{document.body.classList.toggle('recall');e.currentTarget.classList.toggle('active');$$('.def.peek').forEach(d=>d.classList.remove('peek'));toast(document.body.classList.contains('recall')?'Recall mode on: tap a definition to check':'Recall mode off')};
+document.addEventListener('click',e=>{const d=e.target.closest('.def');if(d&&document.body.classList.contains('recall'))d.classList.toggle('peek')});
+
+/* ---------------- navigation ---------------- */
+const pages=$$('.page');
+const groups={start:['Start',''],micro:['Micro · Theme 1','nav-micro'],macro:['Macro · Theme 2','nav-macro'],practice:['Practice','nav-prac']};
+let nailed=new Set(store.get('econNailed',[]));
+const nav=$('#nav');
+Object.keys(groups).forEach(g=>{
+  const box=document.createElement('div');box.className='navgroup '+groups[g][1];
+  box.innerHTML='<h5>'+groups[g][0]+'</h5>';
+  pages.filter(p=>p.dataset.group===g).forEach(p=>{
+    const b=document.createElement('button');b.dataset.go=p.id;
+    b.innerHTML='<span class="code">'+p.dataset.code+'</span><span>'+p.dataset.title+'</span>'+(p.id==='home'?'':'<span class="tick" data-tick="'+p.id+'"></span>');
+    box.appendChild(b);
+  });
+  nav.appendChild(box);
+});
+const tiles=$('#tiles');
+pages.filter(p=>p.id!=='home').forEach(p=>{
+  const t=document.createElement('button');
+  t.className='tile '+({micro:'mi',macro:'ma',practice:'pr'}[p.dataset.group]);t.dataset.go=p.id;
+  const blurb=(p.querySelector('.lede')||{}).textContent||'';
+  t.innerHTML='<span class="code">'+p.dataset.code+'</span><b>'+p.dataset.title+'</b><span>'+blurb+'</span>';
+  tiles.appendChild(t);
+});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){show(g.dataset.go)}});
+
+function updateProgress(){
+  const total=pages.length-1, done=pages.filter(p=>nailed.has(p.id)).length;
+  const pct=Math.round(done/total*100);
+  $('#ringfg').style.strokeDashoffset=157.1*(1-done/total);
+  $('#ringtxt').textContent=pct+'%';
+  $$('[data-tick]').forEach(t=>{const d=nailed.has(t.dataset.tick);t.classList.toggle('done',d);t.textContent=d?'✓':''});
+}
+let current='home';
+function show(id){
+  const p=document.getElementById(id)||pages[0];current=p.id;
+  pages.forEach(x=>x.classList.toggle('show',x===p));
+  document.body.classList.remove('micro','macro','practice');document.body.classList.add(p.dataset.unit);
+  $$('[data-go]',nav).forEach(b=>b.classList.toggle('on',b.dataset.go===p.id));
+  $('#topTitle').textContent=p.dataset.title;
+  const i=pages.indexOf(p), prev=pages[i-1], next=pages[i+1];
+  $('#pager').innerHTML=(prev?'<button data-go="'+prev.id+'"><small>← PREVIOUS</small>'+prev.dataset.title+'</button>':'<span></span>')+(next?'<button data-go="'+next.id+'" style="text-align:right"><small>NEXT →</small>'+next.dataset.title+'</button>':'');
+  const nb=$('#nailBtn');$('#nailWrap').style.display=p.id==='home'?'none':'flex';
+  nb.classList.toggle('done',nailed.has(p.id));nb.textContent=nailed.has(p.id)?'✓ Nailed':'✓ Nailed it';
+  try{if(location.hash!=='#/'+p.id)history.replaceState(null,'','#/'+p.id)}catch(e){}
+  $('#side').classList.remove('open');window.scrollTo(0,0);
+  store.set('econLast',p.id);
+}
+$('#nailBtn').onclick=()=>{if(nailed.has(current))nailed.delete(current);else{nailed.add(current);toast('Nice. '+document.getElementById(current).dataset.title+' ticked off')}store.set('econNailed',[...nailed]);updateProgress();show(current)};
+$('#menuBtn').onclick=()=>$('#side').classList.toggle('open');
+const hashId=()=>{try{return location.hash.replace(/^#\/?/,'')}catch(e){return ''}};
+window.addEventListener('hashchange',()=>show(hashId()));
+document.addEventListener('keydown',e=>{
+  if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
+  const i=pages.findIndex(p=>p.id===current);
+  if(e.key==='ArrowRight'&&pages[i+1])show(pages[i+1].id);
+  if(e.key==='ArrowLeft'&&pages[i-1])show(pages[i-1].id);
+  if(current==='flash'&&(e.key===' '||e.key==='Enter')){e.preventDefault();flip()}
+});
+
+/* ---------------- svg helpers ---------------- */
+const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
+function el(tag,attrs,parent,text){const n=document.createElementNS(NS,tag);for(const k in attrs)n.setAttribute(k,attrs[k]);if(text!==undefined)n.textContent=text;if(parent)parent.appendChild(n);return n}
+function defsArrow(svg,id,color){const d=el('defs',{},svg);const m=el('marker',{id:id,viewBox:'0 0 10 10',refX:'8',refY:'5',markerWidth:'7',markerHeight:'7',orient:'auto-start-reverse'},d);el('path',{d:'M0,0 L10,5 L0,10 z',fill:color},m)}
+function axes(svg,O,W,H,xl,yl){
+  const ink=css('--ink');
+  el('line',{x1:O[0],y1:O[1],x2:O[0]+W,y2:O[1],stroke:ink,'stroke-width':2},svg);
+  el('line',{x1:O[0],y1:O[1],x2:O[0],y2:O[1]-H,stroke:ink,'stroke-width':2},svg);
+  el('text',{x:O[0]+W,y:O[1]+22,'text-anchor':'end','font-size':13,'font-weight':700},svg,xl);
+  el('text',{x:O[0]-8,y:O[1]-H-8,'text-anchor':'start','font-size':13,'font-weight':700},svg,yl);
+  el('text',{x:O[0]-10,y:O[1]+16,'font-size':12},svg,'0');
+}
+const styleTag=document.createElement('style');styleTag.textContent='@keyframes draw{from{stroke-dashoffset:900}to{stroke-dashoffset:0}}.drawn{stroke-dasharray:900;animation:draw .9s ease forwards}@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}.pop{transform-box:fill-box;transform-origin:center;animation:pop .35s ease}';document.head.appendChild(styleTag);
+
+/* ---------------- PPF lab ---------------- */
+const ppf={mode:'along',f:50};
+const PO=[70,280],PW=300,PH=220;
+const ppfModes={
+  along:{l:'Move along',cap:null},
+  inside:{l:'Inside: unemployment'},
+  outside:{l:'Outside: unattainable'},
+  out:{l:'Outward shift'},
+  in:{l:'Inward shift'},
+  pivot:{l:'Pivot: tech in clothes only'},
+  line:{l:'Straight-line PPF'}
+};
+function curvePts(Fmax,Cmax,shape){const pts=[];for(let i=0;i<=80;i++){if(shape==='line'){const f=Fmax*i/80;pts.push([f,Cmax*(1-f/Fmax)])}else{const a=i/80*Math.PI/2;pts.push([Fmax*Math.sin(a),Cmax*Math.cos(a)])}}return pts}
+function curveLabel(svg,F,C,theta,txt,col,bold){const p=px(F*Math.sin(theta),C*Math.cos(theta));el('text',{x:p[0]+8,y:p[1]-6,'font-size':12.5,'font-weight':bold?700:400,fill:col},svg,txt)}
+const px=(f,c)=>[PO[0]+f/120*PW,PO[1]-c/240*PH];
+function pathFrom(pts){return pts.map((p,i)=>(i?'L':'M')+px(p[0],p[1]).map(v=>v.toFixed(1)).join(',')).join(' ')}
+function cOf(f,Fmax,Cmax,shape){return shape==='line'?Cmax*(1-f/Fmax):Cmax*Math.sqrt(Math.max(0,1-(f/Fmax)**2))}
+function drawPPF(animate){
+  const svg=$('#ppfSvg');svg.innerHTML='';const acc=css('--accent'),mut=css('--muted'),ink=css('--ink'),bad=css('--bad'),good=css('--good');
+  defsArrow(svg,'ppfA',acc);
+  axes(svg,PO,PW+40,PH+20,'Food','Clothes');
+  const m=ppf.mode;let cap='';
+  const shape=m==='line'?'line':'curve';
+  // base curve
+  const base=pathFrom(curvePts(100,200,shape));
+  if(['out','in','pivot'].includes(m)){
+    el('path',{d:base,fill:'none',stroke:mut,'stroke-width':2,'stroke-dasharray':'6 5'},svg);
+    curveLabel(svg,100,200,1.25,'PPF₁',mut,false);
+    let F=100,C=200;
+    if(m==='out'){F=118;C=236} if(m==='in'){F=78;C=156} if(m==='pivot'){F=100;C=236}
+    const p=el('path',{d:pathFrom(curvePts(F,C,'curve')),fill:'none',stroke:acc,'stroke-width':3.2},svg);
+    if(animate)p.classList.add('drawn');
+    curveLabel(svg,F,C,m==='pivot'?0.75:1.0,'PPF₂',acc,true);
+    if(m!=='pivot'){const a=px(60,cOf(60,100,200,'curve')),b=px(60*F/100,cOf(60*F/100,F,C,'curve'));el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:acc,'stroke-width':2,'marker-end':'url(#ppfA)'},svg)}
+    else{const a=px(0,200),b=px(0,236);el('line',{x1:a[0]+12,y1:a[1],x2:b[0]+12,y2:b[1]+4,stroke:acc,'stroke-width':2,'marker-end':'url(#ppfA)'},svg)}
+    cap={out:'<b>Outward shift = potential growth.</b> Productive capacity has risen because of more or better factors of production: investment, new technology, education &amp; training, net immigration, or new resources. More of <b>both</b> goods is now possible.',
+         in:'<b>Inward shift = fall in productive capacity.</b> Causes: natural disaster or war destroying capital, depletion of non-renewable resources, emigration or an ageing workforce, or failing to replace depreciating capital.',
+         pivot:'<b>Pivot / asymmetric shift.</b> New technology raises productive capacity in <b>clothes only</b>. Max food is unchanged, so the curve pivots up from the food intercept. The opportunity cost of food (in clothes) has <b>risen</b>.'}[m];
+  } else {
+    const p=el('path',{d:base,fill:'none',stroke:acc,'stroke-width':3.2},svg);if(animate)p.classList.add('drawn');
+    curveLabel(svg,100,200,shape==='line'?0.9:1.15,'PPF',acc,true);
+  }
+  let pt=null,lab='';
+  if(m==='along'||m==='line'){
+    const f=ppf.f,c=cOf(f,100,200,shape),f2=Math.min(100,f+10),c2=cOf(f2,100,200,shape);
+    pt=[f,c];lab='A';
+    const a=px(f,c),b=px(f2,c2);
+    el('line',{x1:a[0],y1:a[1],x2:a[0],y2:PO[1],stroke:mut,'stroke-dasharray':'4 4'},svg);
+    el('line',{x1:a[0],y1:a[1],x2:PO[0],y2:a[1],stroke:mut,'stroke-dasharray':'4 4'},svg);
+    el('text',{x:a[0],y:PO[1]+16,'font-size':11.5,fill:mut,'text-anchor':'middle'},svg,Math.round(f));
+    el('text',{x:PO[0]-6,y:a[1]+4,'font-size':11.5,fill:mut,'text-anchor':'end'},svg,Math.round(c));
+    if(f<100){el('circle',{cx:b[0],cy:b[1],r:5,fill:'none',stroke:acc,'stroke-width':2},svg);
+      el('path',{d:'M'+a[0]+','+a[1]+' L'+a[0]+','+b[1]+' L'+b[0]+','+b[1],fill:'none',stroke:bad,'stroke-width':2},svg);
+      el('text',{x:b[0]+8,y:b[1]+4,'font-size':12,'font-weight':700,fill:acc},svg,'B');}
+    const oc=(c-c2)/(f2-f||1);
+    cap='Point <b>A</b>: '+fmt(f,0)+' food, '+fmt(c,0)+' clothes. This is <b>productively efficient</b> (on the PPF). Producing <b>'+fmt(f2-f,0)+' more food</b> (A→B) costs <b>'+fmt(c-c2,1)+' clothes</b>, so the marginal OC is <b>'+fmt(oc,2)+' clothes per unit of food</b>. '+(shape==='line'?'With a straight line the OC is <b>constant</b>: try the slider.':'Slide right and watch the OC <b>rise</b>. That\'s why the PPF is concave.');
+  }
+  if(m==='inside'){pt=[45,95];lab='X';cap='<b>Point X (inside): productively inefficient.</b> Resources are unemployed or wasted, e.g. in a recession. Moving from X to the PPF is <b>actual growth</b> without the PPF shifting, and there\'s <b>no opportunity cost</b> to producing more of both.'}
+  if(m==='outside'){pt=[90,170];lab='Y';cap='<b>Point Y (outside): unattainable</b> with current resources and technology. It can only be reached if the PPF shifts out (potential growth), or temporarily through trade.'}
+  if(pt){const a=px(pt[0],pt[1]);const col=m==='outside'?bad:(m==='inside'?css('--gold'):acc);const dot=el('circle',{cx:a[0],cy:a[1],r:7,fill:col,stroke:ink,'stroke-width':1.5},svg);dot.classList.add('pop');el('text',{x:a[0]+11,y:a[1]-8,'font-size':13,'font-weight':700},svg,lab)}
+  $('#ppfCap').innerHTML=cap;
+  $('#ppfSliderWrap').style.display=(m==='along'||m==='line')?'block':'none';
+}
+const ppfBtns=$('#ppfBtns');
+Object.keys(ppfModes).forEach(k=>{const b=document.createElement('button');b.className='btn'+(k==='along'?' on':'');b.textContent=ppfModes[k].l;b.onclick=()=>{ppf.mode=k;$$('.btn',ppfBtns).forEach(x=>x.classList.toggle('on',x===b));drawPPF(true)};ppfBtns.appendChild(b)});
+$('#ppfSlider').oninput=e=>{ppf.f=+e.target.value;drawPPF(false)};
+
+/* capital vs consumer goods */
+function drawCap(){
+  const svg=$('#capSvg');svg.innerHTML='';const acc=css('--accent'),mut=css('--muted'),ink=css('--ink');
+  defsArrow(svg,'capA',acc);
+  [[0,'Country A: favours capital goods',0.78,1.32],[260,'Country B: favours consumer goods',0.3,1.1]].forEach(([ox,title,t,grow])=>{
+    const O=[ox+40,210],W=190,H=160;
+    const P=(x,y)=>[O[0]+x*W,O[1]-y*H];
+    const ln=(a,b,s)=>el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:s||ink,'stroke-width':1.8},svg);
+    ln(O,[O[0]+W+10,O[1]]);ln(O,[O[0],O[1]-H-10]);
+    el('text',{x:O[0]+W+10,y:O[1]+16,'font-size':11,'text-anchor':'end','font-weight':700},svg,'Consumer goods');
+    el('text',{x:O[0]-4,y:O[1]-H-16,'font-size':11,'font-weight':700},svg,'Capital goods');
+    el('text',{x:O[0]+W/2,y:O[1]+34,'font-size':12,'text-anchor':'middle','font-weight':700,fill:acc},svg,title);
+    const curve=s=>{let d='';for(let i=0;i<=40;i++){const a=i/40*Math.PI/2;const p=P(0.7*s*Math.sin(a),0.7*s*Math.cos(a));d+=(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)}return d};
+    el('path',{d:curve(1),fill:'none',stroke:ink,'stroke-width':2.4},svg);
+    el('path',{d:curve(grow),fill:'none',stroke:acc,'stroke-width':2.4,'stroke-dasharray':'6 4'},svg);
+    const a=t*Math.PI/2;const pt=P(0.7*Math.sin(Math.PI/2-a),0.7*Math.cos(Math.PI/2-a));
+    el('circle',{cx:pt[0],cy:pt[1],r:5.5,fill:acc,stroke:ink},svg);
+    el('text',{x:pt[0]+8,y:pt[1]-6,'font-size':12,'font-weight':700},svg,ox?'B':'A');
+    el('text',{x:P(0.7*grow*0.72,0)[0],y:P(0,0.7*grow*0.72)[1]-4,'font-size':11,fill:acc},svg,'future PPF');
+  });
+}
+
+/* ---------------- Demand & supply labs ---------------- */
+const DO=[70,285],DW=320,DH=240;
+const dpx=(q,p)=>[DO[0]+q/100*DW,DO[1]-p/100*DH];
+function drawMarket(kind,sc){
+  const svg=$(kind==='d'?'#dSvg':'#sSvg');svg.innerHTML='';const acc=css('--accent'),mut=css('--muted'),ink=css('--ink');
+  defsArrow(svg,kind+'A',acc);
+  axes(svg,DO,DW+20,DH+10,'Quantity','Price');
+  const lineQ=(p,sh)=>kind==='d'?(100-p)+sh:p+sh; // q as fn of p
+  const rng=(sh)=>kind==='d'?[Math.max(10,100+sh-94),Math.min(90,100+sh-4)]:[Math.max(10,4-sh),Math.min(90,94-sh)];
+  const seg=(sh)=>{const r=rng(sh);const a=dpx(lineQ(r[0],sh),r[0]),b=dpx(lineQ(r[1],sh),r[1]);return 'M'+a.join(',')+' L'+b.join(',')};
+  const endLab=(sh)=>{const r=rng(sh);const p=kind==='d'?r[0]:r[1];return dpx(lineQ(p,sh),p)};
+  const name=kind==='d'?'D':'S';
+  const guides=(q,p,lq,lp)=>{const a=dpx(q,p);el('line',{x1:a[0],y1:a[1],x2:a[0],y2:DO[1],stroke:mut,'stroke-dasharray':'4 4'},svg);el('line',{x1:a[0],y1:a[1],x2:DO[0],y2:a[1],stroke:mut,'stroke-dasharray':'4 4'},svg);if(lq)el('text',{x:a[0],y:DO[1]+16,'font-size':12,'text-anchor':'middle'},svg,lq);if(lp)el('text',{x:DO[0]-6,y:a[1]+4,'font-size':12,'text-anchor':'end'},svg,lp)};
+  if(!sc){el('path',{d:seg(0),stroke:acc,'stroke-width':3.2,fill:'none'},svg);const e=endLab(0);el('text',{x:e[0]+4,y:e[1]+4,'font-size':13,'font-weight':700,fill:acc},svg,name);return}
+  if(sc.t==='move'){
+    el('path',{d:seg(0),stroke:acc,'stroke-width':3.2,fill:'none'},svg);
+    const e=endLab(0);el('text',{x:e[0]+4,y:e[1]+4,'font-size':13,'font-weight':700,fill:acc},svg,name);
+    const p1=sc.p1,p2=sc.p2,q1=lineQ(p1,0),q2=lineQ(p2,0);
+    guides(q1,p1,'Q₁','P₁');guides(q2,p2,'Q₂','P₂');
+    const a=dpx(q1,p1),b=dpx(q2,p2);
+    el('circle',{cx:a[0],cy:a[1],r:6,fill:mut},svg);
+    const dot=el('circle',{cx:b[0],cy:b[1],r:7,fill:acc,stroke:ink},svg);dot.classList.add('pop');
+    const off=kind==='d'?[8,8]:[-8,8];
+    el('line',{x1:a[0]+(b[0]-a[0])*.2+off[0],y1:a[1]+(b[1]-a[1])*.2+off[1],x2:a[0]+(b[0]-a[0])*.8+off[0],y2:a[1]+(b[1]-a[1])*.8+off[1],stroke:acc,'stroke-width':2.2,'marker-end':'url(#'+kind+'A)'},svg);
+  } else {
+    el('path',{d:seg(0),stroke:mut,'stroke-width':2.4,'stroke-dasharray':'6 5',fill:'none'},svg);
+    const e1=endLab(0);el('text',{x:e1[0]+4,y:e1[1]+4,'font-size':13,fill:mut},svg,name+'₁');
+    const sh=sc.dir*20;
+    const p=el('path',{d:seg(sh),stroke:acc,'stroke-width':3.2,fill:'none'},svg);p.classList.add('drawn');
+    const e2=endLab(sh);el('text',{x:e2[0]+4,y:e2[1]+4,'font-size':13,'font-weight':700,fill:acc},svg,name+'₂');
+    const P0=50,q1=lineQ(P0,0),q2=lineQ(P0,sh);
+    guides(q1,P0,'Q₁','P');guides(q2,P0,'Q₂','');
+    const a=dpx(q1,P0),b=dpx(q2,P0);
+    el('line',{x1:a[0]+(sc.dir>0?8:-8),y1:a[1]-14,x2:b[0]-(sc.dir>0?8:-8),y2:b[1]-14,stroke:acc,'stroke-width':2.4,'marker-end':'url(#'+kind+'A)'},svg);
+  }
+}
+const dScen=[
+  {l:'Own price falls',t:'move',p1:60,p2:40,c:'<b>Movement along D: extension of demand.</b> The good\'s <b>own price</b> falls from P₁ to P₂, so quantity demanded rises from Q₁ to Q₂. The curve does <b>not</b> shift.'},
+  {l:'Own price rises',t:'move',p1:40,p2:60,c:'<b>Movement along D: contraction of demand.</b> Own price rises, so quantity demanded falls. Not a "fall in demand".'},
+  {l:'Incomes rise (normal good)',t:'shift',dir:1,c:'<b>Increase in demand: D shifts right.</b> Higher real incomes mean consumers are able to buy more of a normal good at every price (P stays the same, Q₁ → Q₂).'},
+  {l:'Incomes rise (inferior good)',t:'shift',dir:-1,c:'<b>Decrease in demand: D shifts left.</b> As income rises, consumers switch from inferior goods (e.g. value-range products) to better alternatives.'},
+  {l:'Price of a substitute rises',t:'shift',dir:1,c:'<b>D shifts right.</b> e.g. Pepsi gets dearer → Coke is relatively cheaper → consumers switch to Coke. Substitutes have a <b>positive</b> relationship.'},
+  {l:'Price of a complement rises',t:'shift',dir:-1,c:'<b>D shifts left.</b> e.g. consoles get dearer → fewer consoles bought → less demand for games. Complements have an <b>inverse</b> relationship.'},
+  {l:'Successful advertising',t:'shift',dir:1,c:'<b>D shifts right.</b> Tastes and preferences change, so more is demanded at every price.'},
+  {l:'Expect future price rise',t:'shift',dir:1,c:'<b>D shifts right today.</b> Consumers bring purchases forward to beat the expected price rise.'},
+  {l:'Population falls',t:'shift',dir:-1,c:'<b>D shifts left.</b> Fewer consumers in the market.'},
+  {l:'Health scare',t:'shift',dir:-1,c:'<b>D shifts left.</b> Tastes and preferences turn against the good.'}
+];
+const sScen=[
+  {l:'Own price rises',t:'move',p1:40,p2:60,c:'<b>Movement along S: extension of supply.</b> A higher price makes production more profitable, so firms raise quantity supplied.'},
+  {l:'Own price falls',t:'move',p1:60,p2:40,c:'<b>Movement along S: contraction of supply.</b> Less profitable, so quantity supplied falls.'},
+  {l:'Costs of production rise',t:'shift',dir:-1,c:'<b>Decrease in supply: S shifts left.</b> Higher wages, raw material or energy costs → lower profit at every price → firms supply less at each price.'},
+  {l:'New technology',t:'shift',dir:1,c:'<b>Increase in supply: S shifts right.</b> More efficient production → lower unit costs → more supplied at every price.'},
+  {l:'Indirect tax imposed',t:'shift',dir:-1,c:'<b>S shifts left.</b> A tax raises firms\' costs per unit, so they supply less at each price.'},
+  {l:'Subsidy given',t:'shift',dir:1,c:'<b>S shifts right.</b> The subsidy lowers costs, so firms supply more at each price.'},
+  {l:'More firms enter',t:'shift',dir:1,c:'<b>S shifts right.</b> Market supply is the sum of all firms\' supply.'},
+  {l:'Bad weather / drought',t:'shift',dir:-1,c:'<b>S shifts left.</b> A smaller harvest means less is available at every price.'},
+  {l:'Productivity rises',t:'shift',dir:1,c:'<b>S shifts right.</b> More output per worker lowers unit costs.'}
+];
+function buildLab(kind,list){
+  const wrap=$(kind==='d'?'#dBtns':'#sBtns'),cap=$(kind==='d'?'#dCap':'#sCap');
+  list.forEach(s=>{const b=document.createElement('button');b.className='btn';b.innerHTML=(s.t==='move'?'↕ ':'↔ ')+s.l;b.onclick=()=>{$$('.btn',wrap).forEach(x=>x.classList.toggle('on',x===b));drawMarket(kind,s);cap.innerHTML=s.c;labState[kind]=s};wrap.appendChild(b)});
+}
+const labState={d:null,s:null};
+buildLab('d',dScen);buildLab('s',sScen);
+
+/* MU chart */
+function drawMU(){
+  const svg=$('#muSvg');svg.innerHTML='';const acc=css('--accent'),mut=css('--muted'),ink=css('--ink'),bad=css('--bad'),gold=css('--gold');
+  const TU=[20,32,40,42,42,39],MU=[20,12,8,2,0,-3];
+  // TU
+  let O=[40,215];
+  el('line',{x1:O[0],y1:O[1],x2:240,y2:O[1],stroke:ink,'stroke-width':1.8},svg);el('line',{x1:O[0],y1:O[1],x2:O[0],y2:30,stroke:ink,'stroke-width':1.8},svg);
+  el('text',{x:O[0],y:22,'font-size':12,'font-weight':700},svg,'Total utility');
+  TU.forEach((v,i)=>{const h=v*4,x=O[0]+10+i*32;el('rect',{x:x,y:O[1]-h,width:22,height:h,rx:3,fill:i===4?gold:acc,opacity:i===4?1:.85},svg);el('text',{x:x+11,y:O[1]-h-5,'font-size':11,'text-anchor':'middle'},svg,v);el('text',{x:x+11,y:O[1]+15,'font-size':11,'text-anchor':'middle',fill:mut},svg,i+1)});
+  el('text',{x:140,y:O[1]+32,'font-size':11,'text-anchor':'middle',fill:mut},svg,'Glasses consumed');
+  // MU
+  O=[290,170];
+  el('line',{x1:O[0],y1:O[1],x2:500,y2:O[1],stroke:ink,'stroke-width':1.8},svg);el('line',{x1:O[0],y1:200,x2:O[0],y2:30,stroke:ink,'stroke-width':1.8},svg);
+  el('text',{x:O[0],y:22,'font-size':12,'font-weight':700},svg,'Marginal utility');
+  MU.forEach((v,i)=>{const h=Math.abs(v)*6,x=O[0]+10+i*32;el('rect',{x:x,y:v>=0?O[1]-h:O[1],width:22,height:Math.max(h,2),rx:3,fill:v<0?bad:(v===0?gold:acc),opacity:.85},svg);el('text',{x:x+11,y:v>=0?O[1]-h-5:O[1]+h+13,'font-size':11,'text-anchor':'middle'},svg,v);el('text',{x:x+11,y:v<0?O[1]-6:O[1]+15,'font-size':11,'text-anchor':'middle',fill:mut},svg,v<0?'':i+1)});
+  el('text',{x:395,y:225,'font-size':11,'text-anchor':'middle',fill:gold,'font-weight':700},svg,'MU = 0 → TU at its max');
+}
+
+/* ---------------- sorter ---------------- */
+const sorts=[
+  ['UK CPI inflation was above 10% in late 2022.','P','Testable against ONS data (and true).'],
+  ['The government should raise the minimum wage to £15 an hour.','N','"Should" signals a value judgement.'],
+  ['A rise in the price of petrol will reduce the demand for large cars.','P','A cause → effect claim that can be tested.'],
+  ['Income inequality in the UK is unacceptably high.','N','"Unacceptably" is an opinion. The level can be measured, but whether it\'s acceptable can\'t.'],
+  ['UK unemployment is currently 50%.','P','False, but still positive: it can be checked and disproved.'],
+  ['Reducing inflation is more important than reducing unemployment.','N','Ranking objectives is a value judgement.'],
+  ['Raising the minimum wage will cause some low-skilled workers to lose their jobs.','P','A testable prediction, even though economists disagree on the evidence.'],
+  ['It is unfair that footballers earn more than nurses.','N','"Unfair" signals a normative judgement.'],
+  ['An increase in income tax will reduce consumer spending.','P','Can be tested with data.'],
+  ['The sugar tax was a good policy because it improved public health.','N','Trap: it contains a testable claim, but "good policy" makes the whole statement normative.']
+];
+let sortRight=0,sortDone=0;
+const sorter=$('#sorter');
+sorts.forEach(s=>{const d=document.createElement('div');d.className='sort-item';d.innerHTML='<span class="st">'+s[0]+'</span><button class="btn" data-a="P">Positive</button><button class="btn" data-a="N">Normative</button><span class="why"></span>';
+  $$('button',d).forEach(b=>b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;sortDone++;const ok=b.dataset.a===s[1];if(ok)sortRight++;d.classList.add(ok?'right':'wrong');b.classList.add('on');$('.why',d).textContent=(ok?'✓ ':'✗ It\'s '+(s[1]==='P'?'positive':'normative')+'. ')+s[2];$('#sortScore').textContent='Score: '+sortRight+' / '+sortDone+(sortDone===sorts.length?(sortRight===sorts.length?'  🎯 perfect':'  (reload the page to retry)'):'')});
+  sorter.appendChild(d)});
+
+/* ---------------- calculators ---------------- */
+function gdpCalc(){const N=+$('#gN').value,P=+$('#gP').value,pop=+$('#gPop').value,prev=+$('#gPrev').value;const real=N*100/P,pc=real/pop*1000,g=(real-prev)/prev*100;
+  $('#gOut').innerHTML='Real GDP = '+fmt(N,0)+' × (100 ÷ '+fmt(P)+') = <span class="big">£'+fmt(real,1)+'bn</span><br>Real growth = ('+fmt(real,1)+' − '+fmt(prev,0)+') ÷ '+fmt(prev,0)+' × 100 = <b>'+fmt(g,2)+'%</b><br>Real GDP per capita = £'+fmt(real,1)+'bn ÷ '+fmt(pop)+'m = <b>£'+fmt(pc,0)+'</b> per person'}
+['#gN','#gP','#gPop','#gPrev'].forEach(s=>$(s).oninput=gdpCalc);gdpCalc();
+function pcCalc(){const a=+$('#pcA').value,b=+$('#pcB').value;$('#pcOut').innerHTML='% change = ('+fmt(b)+' − '+fmt(a)+') ÷ '+fmt(a)+' × 100 = <span class="big">'+fmt((b-a)/a*100,2)+'%</span><br><span class="muted">Change in points = '+fmt(b-a)+'. Only equal to the % change if the old value is 100.</span>'}
+['#pcA','#pcB'].forEach(s=>$(s).oninput=pcCalc);pcCalc();
+function ppCalc(){const a=+$('#ppA').value,b=+$('#ppB').value,g=+$('#ppG').value;const r=a/b;$('#ppOut').innerHTML='PPP rate: '+fmt(a)+' ÷ '+fmt(b)+' → <span class="big">$1 = '+fmt(r,2)+'</span> local currency<br>GDP in PPP dollars = '+fmt(g,0)+'bn ÷ '+fmt(r,2)+' = <b>$'+fmt(g/r,1)+'bn</b>'}
+['#ppA','#ppB','#ppG'].forEach(s=>$(s).oninput=ppCalc);ppCalc();
+
+const cpiRows=[['Food & drink',15,108],['Housing & household services',30,106],['Transport',15,104],['Clothing & footwear',10,98],['Recreation & culture',15,102],['Other',15,103]];
+const cpiT=$('#cpiTbl');
+cpiRows.forEach((r,i)=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+r[0]+'</td><td><input type="number" data-i="'+i+'" data-k="1" value="'+r[1]+'"></td><td><input type="number" data-i="'+i+'" data-k="2" value="'+r[2]+'"></td><td class="prod" style="font-family:var(--mono)"></td>';cpiT.appendChild(tr)});
+const totRow=document.createElement('tr');totRow.innerHTML='<td><b>Total</b></td><td id="cpiW" style="font-family:var(--mono);font-weight:700"></td><td></td><td id="cpiS" style="font-family:var(--mono);font-weight:700"></td>';cpiT.appendChild(totRow);
+function cpiCalc(){let W=0,S=0;$$('tr',cpiT).forEach(tr=>{const ins=$$('input',tr);if(ins.length){const w=+ins[0].value,p=+ins[1].value;W+=w;S+=w*p;$('.prod',tr).textContent=fmt(w*p,1)}});
+  $('#cpiW').textContent=fmt(W,1);$('#cpiS').textContent=fmt(S,1);const idx=S/W,prev=+$('#cpiPrev').value;
+  $('#cpiOut').innerHTML='Weighted index = '+fmt(S,1)+' ÷ '+fmt(W,1)+' = <span class="big">'+fmt(idx,2)+'</span><br>Inflation = ('+fmt(idx,2)+' − '+fmt(prev,2)+') ÷ '+fmt(prev,2)+' × 100 = <b>'+fmt((idx-prev)/prev*100,2)+'%</b>'}
+cpiT.addEventListener('input',cpiCalc);$('#cpiPrev').oninput=cpiCalc;cpiCalc();
+
+function labCalc(prevTxt){const E=+$('#lE').value,U=+$('#lU').value,I=+$('#lI').value;const WAP=E+U+I,A=E+U;
+  $('#lOut').innerHTML='Working-age pop = '+fmt(WAP)+' · Economically active = '+fmt(A)+'<br>Employment rate = '+fmt(E)+'/'+fmt(WAP)+' = <span class="big">'+fmt(E/WAP*100,1)+'%</span><br>Unemployment rate = '+fmt(U)+'/'+fmt(A)+' = <span class="big">'+fmt(U/A*100,1)+'%</span><br>Inactivity rate = '+fmt(I)+'/'+fmt(WAP)+' = <span class="big">'+fmt(I/WAP*100,1)+'%</span>';}
+['#lE','#lU','#lI'].forEach(s=>$(s).oninput=()=>labCalc());labCalc();
+$$('[data-lab]').forEach(b=>b.onclick=()=>{const E=$('#lE'),U=$('#lU'),I=$('#lI');const k=b.dataset.lab;let c='';
+  if(k==='mig'){E.value=+E.value+20;U.value=+U.value+20;c='<b>Migration:</b> the employment rate <b>and</b> the unemployment rate both rise. Half the migrants are unemployed (vs 20% of the existing labour force), so the unemployment rate climbs. The effect depends on <b>where migrants enter</b> the labour market.'}
+  if(k==='disc'){U.value=Math.max(0,+U.value-5);I.value=+I.value+5;c='<b>Discouraged workers:</b> the unemployment rate <b>falls</b> but nobody found a job. The employment rate is unchanged and inactivity rises. A falling unemployment rate isn\'t always good news.'}
+  if(k==='back'){I.value=Math.max(0,+I.value-10);U.value=+U.value+10;c='<b>Inactive start searching</b> (e.g. students or carers): unemployment rate <b>rises</b>, inactivity falls, and the employment rate is unchanged, at first.'}
+  if(k==='reset'){E.value=40;U.value=10;I.value=50;c='Book example: 100 working-age people (40 employed, 10 unemployed, 50 inactive).'}
+  $('#lCap').innerHTML=c;labCalc()});
+
+/* ---------------- flashcards ---------------- */
+const cards=[
+ ['micro','Economics','The study of how scarce resources are allocated to satisfy unlimited wants. A social science because it studies human behaviour.'],
+ ['micro','Economic model','A simplified representation of reality, built on assumptions, used to explain relationships and make predictions.'],
+ ['micro','Ceteris paribus','"All other things being equal": all variables except the one being studied are held constant.'],
+ ['micro','Why can\'t economics run experiments?','No controlled conditions (can\'t hold other variables constant), can\'t repeat history, human behaviour is unpredictable, and there are ethical limits.'],
+ ['micro','Positive statement','An objective statement that can be tested / proved or disproved with evidence. It doesn\'t have to be true.'],
+ ['micro','Normative statement','A subjective statement based on opinion / value judgements that cannot be tested. Often uses "should", "ought", "fair".'],
+ ['micro','Value judgement','A view about what is good or bad, based on personal beliefs rather than evidence.'],
+ ['micro','Scarcity (the economic problem)','Finite resources but unlimited wants, so choices must be made.'],
+ ['micro','Factors of production + rewards','Capital (interest), Enterprise (profit), Land (rent), Labour (wages).'],
+ ['micro','Renewable resource','A resource that can be replenished, so stocks can be maintained if used sustainably (wind, solar, timber, fish).'],
+ ['micro','Non-renewable resource','A finite resource that cannot be replaced once used (oil, coal, gas).'],
+ ['micro','Opportunity cost','The value of the next best alternative forgone when a choice is made.'],
+ ['micro','PPF','A curve showing the maximum combinations of two goods an economy can produce when all resources are fully and efficiently employed.'],
+ ['micro','Point inside the PPF','Productive inefficiency: unemployed or wasted resources.'],
+ ['micro','Point outside the PPF','Unattainable with current resources and technology.'],
+ ['micro','Productive efficiency (PPF)','Producing on the PPF: maximum output from resources, no waste.'],
+ ['micro','Allocative efficiency (PPF)','The one point on the PPF where the mix of goods best matches society\'s preferences.'],
+ ['micro','Why is a PPF concave?','Increasing opportunity cost: resources aren\'t equally suited to producing both goods.'],
+ ['micro','Causes of an outward PPF shift','↑ quantity or quality of factors: investment, new technology, education & training, net immigration, new resources.'],
+ ['micro','Causes of an inward PPF shift','Natural disaster, war, depletion of non-renewables, emigration or ageing, failure to replace depreciating capital.'],
+ ['micro','Capital goods','Goods used to produce other goods (machinery, factories, infrastructure).'],
+ ['micro','Consumer goods','Goods bought to satisfy wants directly.'],
+ ['micro','Opportunity cost of investment','Consumer goods (and current living standards) forgone today, in exchange for more output in future.'],
+ ['micro','Specialisation','Concentrating on producing a limited range of goods or services.'],
+ ['micro','Division of labour','Breaking production into separate tasks, with each worker doing one task (Adam Smith\'s pin factory).'],
+ ['micro','Adam Smith\'s pin factory','10 workers split ~18 tasks to make ~48,000 pins a day, vs at most 20 a day per worker alone (Wealth of Nations, 1776).'],
+ ['micro','3 disadvantages of division of labour','Boredom/alienation → lower motivation; interdependence (one breakdown halts the line); narrow skills → structural unemployment.'],
+ ['micro','Double coincidence of wants','Barter requires each party to want what the other has. Money as a medium of exchange removes this.'],
+ ['micro','4 functions of money','Medium of exchange; measure of value (unit of account); store of value; method of deferred payment.'],
+ ['micro','Rational decision making','Consumers aim to maximise utility; firms aim to maximise profit.'],
+ ['micro','Utility','The satisfaction gained from consuming a good or service.'],
+ ['micro','Demand','The quantity consumers are willing and able to buy at a given price over a given time period.'],
+ ['micro','Law of demand','Inverse relationship between price and quantity demanded, ceteris paribus.'],
+ ['micro','Movement vs shift of demand','Movement = change in the good\'s own price (extension/contraction). Shift = change in any other condition of demand (increase/decrease).'],
+ ['micro','Conditions of demand (PIRATES)','Population, Income, Related goods\' prices, Advertising, Tastes, Expectations, Seasons.'],
+ ['micro','Normal vs inferior good','Normal: income ↑ → demand ↑. Inferior: income ↑ → demand ↓.'],
+ ['micro','Substitutes vs complements','Substitutes: price of A ↑ → demand for B ↑. Complements: price of A ↑ → demand for B ↓.'],
+ ['micro','Marginal utility','The extra satisfaction from consuming one more unit of a good.'],
+ ['micro','Law of diminishing marginal utility','As consumption of a good rises, the marginal utility from each additional unit falls.'],
+ ['micro','DMU → demand curve','Each extra unit gives less satisfaction → consumers will pay less for it → they only buy more if price falls → demand slopes down.'],
+ ['micro','Supply','The quantity producers are willing and able to sell at a given price over a given time period.'],
+ ['micro','Law of supply','Positive relationship between price and quantity supplied: higher price → more profitable → more supplied.'],
+ ['micro','Conditions of supply (PINTSWC)','Productivity, Indirect taxes, Number of firms, Technology, Subsidies, Weather, Costs of production.'],
+ ['macro','Economic growth','An increase in real GDP over time (% change in real GDP).'],
+ ['macro','GDP','The total value of all final goods and services produced within a country\'s borders in a given time period.'],
+ ['macro','Recession','Two consecutive quarters of negative real GDP growth.'],
+ ['macro','Nominal GDP','GDP at current prices, not adjusted for inflation (value).'],
+ ['macro','Real GDP','GDP at constant prices, adjusted for inflation (volume).'],
+ ['macro','GDP per capita','GDP ÷ population: average output/income per person.'],
+ ['macro','Value vs volume','Value = measured in money at current prices (nominal). Volume = physical quantity of output (real).'],
+ ['macro','GNI','GDP + net income from abroad (income received from overseas assets and work minus income paid to foreign owners).'],
+ ['macro','Purchasing power parity','An exchange rate that equalises the purchasing power of currencies, so the same basket costs the same. Adjusts for cost-of-living differences.'],
+ ['macro','Why use PPP over market exchange rates?','Market rates are volatile and ignore cheaper non-traded goods in poorer countries, so they understate those countries\' living standards.'],
+ ['macro','Limitations of GDP (name 6)','Inequality, hidden economy, non-market output, leisure/hours, environment/externalities, quality of goods. Also composition of output and PPP.'],
+ ['macro','ONS personal wellbeing questions','Life satisfaction, feeling things are worthwhile, happiness yesterday, anxiety yesterday (each 0–10).'],
+ ['macro','Easterlin paradox','Within a country richer people are happier, but as countries get richer over time, average happiness barely rises.'],
+ ['macro','Why doesn\'t happiness rise with income?','Diminishing marginal utility of income, relative income/status, adaptation, and non-income factors matter.'],
+ ['macro','Inflation','A sustained increase in the general price level over time (a fall in the purchasing power of money).'],
+ ['macro','Deflation','A sustained fall in the general price level (negative inflation rate).'],
+ ['macro','Disinflation','A fall in the rate of inflation. Prices are still rising, but more slowly.'],
+ ['macro','UK inflation target','CPI 2%. An open letter is required if inflation is more than 1 percentage point away.'],
+ ['macro','How are CPI weights decided?','From the Living Costs and Food Survey: the proportion of household spending on each item. Updated annually.'],
+ ['macro','CPI calculation steps','Survey → basket & weights → collect prices monthly → price index per item (base = 100) → × weights, sum, ÷ total weights → % change on a year earlier.'],
+ ['macro','4 limitations of CPI','Excludes owner-occupier housing costs; no average household; quality changes; substitution bias. (Also late new products and survey errors.)'],
+ ['macro','RPI','Retail Prices Index: includes mortgage interest payments and council tax, uses an arithmetic mean, and is usually higher than CPI.'],
+ ['macro','CPI vs RPI: averaging','CPI uses a geometric mean; RPI uses an arithmetic mean (the formula effect makes RPI higher).'],
+ ['macro','Unemployment','People of working age who are willing and able to work and actively seeking work, but without a job.'],
+ ['macro','Claimant count','The number of people claiming unemployment-related benefits (JSA + Universal Credit claimants required to seek work).'],
+ ['macro','ILO unemployment','Without a job, actively sought work in the past 4 weeks, and available to start within 2 weeks. Measured by the Labour Force Survey.'],
+ ['macro','Why ILO > claimant count','It includes people not eligible for benefits (partner\'s income, savings, under-18s) or who choose not to claim.'],
+ ['macro','Underemployment','People in work but not working to full capacity: fewer hours than they want, or jobs below their skill level.'],
+ ['macro','Economically inactive','Not in work and not seeking work or not available: students, retired, long-term sick, carers, discouraged workers.'],
+ ['macro','Employment rate','Employed ÷ working-age population × 100.'],
+ ['macro','Unemployment rate','Unemployed ÷ economically active (employed + unemployed) × 100.'],
+ ['macro','Inactivity rate','Inactive ÷ working-age population × 100.'],
+ ['macro','Skills mismatch','Workers\' skills don\'t match what employers need, so vacancies and unemployment coexist (structural unemployment).'],
+ ['macro','Occupational immobility','Difficulty moving between jobs due to a lack of transferable skills or qualifications.'],
+ ['macro','Migration and unemployment','Raises the labour force; can fill skills shortages and add demand (creating jobs). The effect on the unemployment rate depends on whether migrants find work.']
+];
+let fcFilter='all',deck=[],fcIdx=0,mastered=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function buildDeck(){deck=shuffle(cards.filter(c=>fcFilter==='all'||c[0]===fcFilter).slice());mastered=0;renderCard()}
+function renderCard(){const fc=$('#fc');fc.classList.remove('flip');
+  if(!deck.length){$('#fcFront').textContent='Deck cleared 🎉';$('#fcBack').textContent='Shuffle to go again.';$('#fcCorner').textContent='';$('#fcStat').textContent='All '+mastered+' cards cleared.';return}
+  const c=deck[0];setTimeout(()=>{$('#fcFront').textContent=c[1];$('#fcBack').textContent=c[2]},fc.classList.contains('flip')?250:0);
+  $('#fcCorner').textContent=c[0].toUpperCase();$('#fcStat').textContent=deck.length+' left · '+mastered+' cleared';}
+function flip(){$('#fc').classList.toggle('flip')}
+$('#fc').onclick=flip;$('#fcFlip').onclick=flip;
+$('#fcGot').onclick=()=>{if(!deck.length)return;deck.shift();mastered++;renderCard()};
+$('#fcAgain').onclick=()=>{if(!deck.length)return;const c=deck.shift();deck.splice(Math.min(3,deck.length),0,c);renderCard()};
+$('#fcShuffle').onclick=buildDeck;
+$$('#fcFilter .btn').forEach(b=>b.onclick=()=>{fcFilter=b.dataset.f;$$('#fcFilter .btn').forEach(x=>x.classList.toggle('on',x===b));buildDeck()});
+buildDeck();
+
+/* ---------------- quiz ---------------- */
+const Q=[
+ ['micro','Which of the following is a normative statement?',['A rise in VAT will reduce consumer spending.','UK unemployment was 4% last year.','The government should cut taxes to help low-income families.','Higher interest rates lead to less borrowing.'],2,'"Should" signals a value judgement. A, B and D can all be tested with evidence.'],
+ ['micro','"UK inflation is currently 25%." This statement is…',['Normative, because it is false','Positive, because it can be tested','Normative, because it contains a number','Neither positive nor normative'],1,'Positive statements can be <b>false</b>. What matters is that they can be tested against evidence.'],
+ ['micro','The ceteris paribus assumption means…',['Consumers always act rationally','All other variables are held constant','Markets always reach equilibrium','Resources are fully employed'],1,'Ceteris paribus = "all other things being equal". It isolates the effect of one variable.'],
+ ['micro','Why can\'t economists carry out controlled experiments like natural scientists?',['Economic data is never published','Economic agents never respond to incentives','It\'s impossible to hold all other variables constant in the real world','Economics only studies money'],2,'Real economies can\'t be put in a lab. Other variables keep changing, history can\'t be repeated, and there are ethical limits.'],
+ ['micro','Which resource is most likely to become effectively non-renewable through overuse?',['Solar energy','Wind','Fish stocks','Tidal energy'],2,'Fish are renewable, but if they\'re caught faster than they reproduce, stocks collapse (e.g. North Sea cod).'],
+ ['micro','Sam gives up a £60 shift and a £15 cinema trip to revise. The opportunity cost of revising is…',['£75','£60 wages forgone','£15 cinema trip','Zero, since revising is free'],1,'Opportunity cost is only the <b>next best</b> alternative forgone (the most valuable one), not every alternative added together.'],
+ ['micro','A point inside a country\'s PPF shows…',['Unattainable output','Allocative efficiency','Unemployed or inefficiently used resources','Economic growth'],2,'Inside the PPF, output could rise without giving anything up, because resources are unemployed or wasted.'],
+ ['micro','An economy moves from 40 cars & 300 tonnes of wheat to 50 cars & 260 tonnes of wheat. What is the marginal opportunity cost of one car?',['4 tonnes of wheat','40 tonnes of wheat','0.25 tonnes of wheat','26 tonnes of wheat'],0,'Loss ÷ gain = 40 tonnes ÷ 10 cars = <b>4 tonnes of wheat per car</b>.'],
+ ['micro','A PPF is concave (bowed outwards) because…',['Opportunity cost is constant','Resources are not equally suited to producing both goods','The economy is inefficient','Technology is improving'],1,'Imperfect factor substitutability means the opportunity cost rises as you produce more of one good.'],
+ ['micro','Which would shift a country\'s PPF outwards?',['A fall in unemployment','Net immigration of working-age people','Moving resources from consumer to capital goods','A natural disaster'],1,'More labour raises productive capacity. A fall in unemployment is a movement from inside the PPF <b>towards</b> it, with no shift.'],
+ ['micro','On a PPF diagram, a fall in unemployment is best shown by…',['An outward shift of the PPF','A movement along the PPF','A movement from inside the PPF towards it','An inward shift of the PPF'],2,'Previously idle resources get used, so this is actual growth with no change in potential.'],
+ ['micro','New technology raises output of clothes only. The PPF will…',['Shift out parallel','Pivot outwards on the clothes axis','Shift inwards','Not change'],1,'An asymmetric shift: max clothes rises, max food is unchanged.'],
+ ['micro','Allocative efficiency on a PPF occurs…',['At every point on the PPF','At any point inside the PPF','At the one point that best matches society\'s preferences','Where the PPF meets an axis'],2,'Every point on the PPF is productively efficient, but only one is allocatively efficient.'],
+ ['micro','The main opportunity cost of an economy producing more capital goods today is…',['Higher future output','Fewer consumer goods now','More unemployment in future','Higher inflation'],1,'Resources diverted to capital goods mean fewer consumer goods (and lower living standards) today. The payoff is a bigger PPF shift later.'],
+ ['micro','Adam Smith\'s pin factory is used to illustrate…',['The invisible hand','The division of labour','Diminishing marginal utility','Opportunity cost'],1,'Splitting pin-making into ~18 tasks let 10 workers make ~48,000 pins a day.'],
+ ['micro','Which is a disadvantage of the division of labour?',['Workers become more skilled at their task','Lower training costs','Repetitive tasks lead to boredom and falling motivation','Easier to mechanise production'],2,'The other three are advantages.'],
+ ['micro','Buying a car through 36 monthly payments relies mainly on money as a…',['Medium of exchange','Store of value','Measure of value','Method of deferred payment'],3,'Deferred payment allows debts to be settled in the future in agreed money amounts.'],
+ ['micro','Money removes the need for a "double coincidence of wants" by acting as a…',['Store of value','Medium of exchange','Unit of account','Method of deferred payment'],1,'It\'s generally accepted in exchange, so you don\'t need to find someone who wants exactly what you have.'],
+ ['micro','Under the rational decision-making assumption, firms aim to…',['Maximise revenue','Maximise utility','Maximise profit','Maximise market share'],2,'Consumers maximise utility; firms maximise profit (TR − TC).'],
+ ['micro','Which causes a movement along the demand curve for Coca-Cola?',['A rise in the price of Pepsi','A successful Coca-Cola advert','A fall in the price of Coca-Cola','A rise in consumer incomes'],2,'Only a change in the good\'s <b>own price</b> causes a movement. The others shift demand.'],
+ ['micro','Incomes rise. The demand curve for an inferior good will…',['Shift right','Shift left','Not move','Become upward sloping'],1,'Inferior good: income ↑ → demand ↓, so it shifts left.'],
+ ['micro','The price of games consoles rises sharply. The demand for console games will…',['Shift right','Shift left','Extend','Contract'],1,'Complements: price of one ↑ → demand for the other ↓, so it shifts left. "Contract" would be wrong, since that\'s a movement caused by the games\' own price.'],
+ ['micro','Total utility from 1, 2, 3 and 4 slices of pizza is 10, 18, 24 and 27. What is the marginal utility of the 3rd slice?',['24','8','6','3'],2,'MU = change in TU = 24 − 18 = <b>6</b>.'],
+ ['micro','Total utility is maximised when…',['Marginal utility is at its highest','Marginal utility equals zero','Marginal utility is negative','Price equals zero'],1,'While MU > 0, TU keeps rising. TU peaks when MU = 0.'],
+ ['micro','Diminishing marginal utility explains why the demand curve slopes downward because…',['Firms charge less for larger quantities','Each extra unit gives less satisfaction, so consumers will only buy more at a lower price','Consumers\' incomes fall as they buy more','Supply increases as price falls'],1,'Lower MU per extra unit → lower willingness to pay → more is only bought if price falls.'],
+ ['micro','Which would shift the supply of strawberries to the LEFT?',['A rise in the price of strawberries','A government subsidy to growers','A late frost destroying crops','New picking technology'],2,'Bad weather is a decrease in supply. A price rise is a movement; subsidy and technology shift supply right.'],
+ ['micro','An indirect tax on cigarettes will…',['Shift supply right','Shift supply left','Cause an extension of supply','Shift demand left'],1,'The tax raises costs per unit, so firms supply less at every price.'],
+ ['micro','A rise in the price of a good (ceteris paribus) leads to…',['An increase in supply','A rightward shift of supply','An extension of supply','A decrease in supply'],2,'A movement up along the supply curve. "Increase in supply" means a shift.'],
+ ['macro','Nominal GDP grows by 6% and inflation is 4%. Real GDP growth is approximately…',['10%','6%','4%','2%'],3,'Real growth ≈ nominal growth − inflation = 6 − 4 = <b>2%</b>.'],
+ ['macro','Nominal GDP is £550bn and the price index is 110 (base year = 100). Real GDP is…',['£605bn','£500bn','£450bn','£550bn'],1,'550 × (100 ÷ 110) = <b>£500bn</b>.'],
+ ['macro','An index of real GDP rises from 120 to 126. The percentage increase is…',['6%','5%','4.8%','126%'],1,'(126 − 120) ÷ 120 × 100 = <b>5%</b>. Not 6, which is the change in points.'],
+ ['macro','Real GDP grows by 2% while the population grows by 3%. Real GDP per capita…',['Rises by about 5%','Rises by about 1%','Falls by about 1%','Is unchanged'],2,'Population growing faster than output means average output per person falls.'],
+ ['macro','Real GDP growth slows from 3% to 1%. This means real GDP has…',['Fallen','Risen, but more slowly','Stayed the same','Entered recession'],1,'Positive growth means GDP is still rising. Recession needs <b>negative</b> growth for two quarters.'],
+ ['macro','GDP is £800bn, income received from abroad is £50bn and income paid abroad is £70bn. GNI is…',['£920bn','£850bn','£800bn','£780bn'],3,'GNI = GDP + net income from abroad = 800 + (50 − 70) = <b>£780bn</b>.'],
+ ['macro','The main reason for using PPP exchange rates to compare GDP is that they…',['Are set by central banks','Adjust for differences in the cost of living','Remove the effect of inflation over time','Measure inequality'],1,'PPP equalises purchasing power, so the same basket costs the same.'],
+ ['macro','A Big Mac costs 250 rupees in India and $5 in the US. The implied PPP exchange rate is…',['$1 = 50 rupees','$1 = 1,250 rupees','$1 = 0.02 rupees','$1 = 245 rupees'],0,'250 ÷ 5 = <b>50 rupees per $1</b>.'],
+ ['macro','Which is NOT a limitation of GDP per capita as a measure of living standards?',['It ignores income inequality','It excludes the informal economy','Real GDP adjusts for inflation','It ignores leisure time'],2,'Adjusting for inflation is a strength of real GDP, not a limitation.'],
+ ['macro','The Easterlin paradox suggests that…',['Happiness rises in line with GDP','As countries get richer, average happiness barely rises','Richer people are less happy','Inflation reduces happiness'],1,'Within a country richer people are happier, but over time average happiness stays fairly flat as incomes rise.'],
+ ['macro','UK inflation falls from 5% to 2%. This is an example of…',['Deflation','Disinflation','Stagflation','A fall in the price level'],1,'Prices are still rising, just more slowly. Deflation needs a <b>negative</b> rate.'],
+ ['macro','A price index has two items: food (weight 0.6, index 110) and energy (weight 0.4, index 120). Base year = 100. Inflation is…',['15%','14%','11.5%','12%'],1,'(0.6 × 110) + (0.4 × 120) = 66 + 48 = 114, so inflation = <b>14%</b>.'],
+ ['macro','The weights used in the CPI are based on…',['The Labour Force Survey','The Living Costs and Food Survey','The Census','Bank of England forecasts'],1,'The LCFS shows the proportion of household spending on each item.'],
+ ['macro','Which is included in the RPI but NOT the CPI?',['Food prices','Mortgage interest payments','Clothing','Energy bills'],1,'RPI includes mortgage interest payments and council tax.'],
+ ['macro','The CPI tends to be lower than the RPI partly because the CPI…',['Uses a geometric mean','Includes more items','Is calculated annually','Excludes food'],0,'The geometric mean is always ≤ the arithmetic mean (the "formula effect").'],
+ ['macro','The CPI may overstate inflation because it…',['Includes housing costs','Doesn\'t fully account for quality improvements and substitution','Is based on a survey','Uses a base year'],1,'Some price rises reflect better products, and consumers switch to cheaper substitutes.'],
+ ['macro','Under the ILO definition, an unemployed person must have…',['Claimed JSA for 4 weeks','Sought work in the past 4 weeks and be able to start within 2 weeks','Been out of work for 6 months','Worked fewer than 16 hours a week'],1,'That\'s the international definition used in the Labour Force Survey.'],
+ ['macro','The claimant count is usually lower than ILO unemployment because…',['It includes part-time workers','Many unemployed people aren\'t eligible for, or don\'t claim, benefits','It is a survey with sampling error','It includes the economically inactive'],1,'E.g. a partner\'s income or savings are too high, they\'re under 18, or they choose not to claim.'],
+ ['macro','Which person is underemployed?',['A retired teacher','A graduate engineer working part-time in a café who wants full-time engineering work','A student not looking for work','A person actively seeking work with no job'],1,'In work, but below their skill level and hours, so underemployed. The last option is unemployed.'],
+ ['macro','30m employed, 2m unemployed, 10m inactive. The unemployment rate is…',['4.8%','6.25%','6.7%','20%'],1,'Unemployed ÷ economically active = 2 ÷ 32 = <b>6.25%</b>.'],
+ ['macro','Same economy (30m employed, 2m unemployed, 10m inactive). The employment rate is…',['71.4%','93.75%','75%','23.8%'],0,'30 ÷ 42 (working-age population) = <b>71.4%</b>.'],
+ ['macro','Discouraged workers stop looking for jobs. What happens?',['Unemployment rate rises, inactivity falls','Unemployment rate falls, inactivity rises','Employment rate rises','No change in any rate'],1,'They move from unemployed to inactive. The rate falls, but nobody found work.'],
+ ['macro','Which best explains how migration can REDUCE unemployment?',['Migrants increase the number of jobseekers','Migrants fill skills shortages and spend their wages, creating demand and jobs','Migrants always become economically inactive','Migration reduces the size of the labour force'],1,'The number of jobs isn\'t fixed: filling bottlenecks lets firms expand, and migrants\' spending creates demand.'],
+ ['macro','Vacancies and unemployment both exist because workers lack the skills employers need. This is…',['Underemployment','A skills mismatch','Disinflation','Inactivity'],1,'A skills mismatch causes structural unemployment and reflects occupational immobility.']
+];
+let qFilter='all',qRight=0,qDone=0,qStreak=0;
+function buildQuiz(){const list=$('#qList');list.innerHTML='';qRight=qDone=qStreak=0;updQ();
+  Q.filter(q=>qFilter==='all'||q[0]===qFilter).forEach((q,n)=>{const d=document.createElement('div');d.className='q';
+    d.innerHTML='<div class="qt"><span class="tag '+(q[0]==='micro'?'mi':'ma')+'">'+q[0].toUpperCase()+'</span> '+(n+1)+'. '+q[1]+'</div>'+q[2].map((o,i)=>'<button class="opt" data-i="'+i+'">'+String.fromCharCode(65+i)+'. '+o+'</button>').join('')+'<div class="ex">'+q[4]+'</div>';
+    $$('.opt',d).forEach(b=>b.onclick=()=>{if(d.classList.contains('answered'))return;d.classList.add('answered');const i=+b.dataset.i,ok=i===q[3];qDone++;if(ok){qRight++;qStreak++;if(qStreak%5===0)toast('🔥 '+qStreak+' in a row!')}else qStreak=0;
+      b.classList.add(ok?'right':'wrong');$$('.opt',d)[q[3]].classList.add('right');$$('.opt',d).forEach(x=>x.disabled=true);updQ();
+      if(qDone===Q.filter(x=>qFilter==='all'||x[0]===qFilter).length)toast('Finished: '+qRight+'/'+qDone+(qRight===qDone?' 🎯':''))});
+    list.appendChild(d)});
+}
+function updQ(){const tot=Q.filter(q=>qFilter==='all'||q[0]===qFilter).length;$('#qScore').textContent=qRight+'/'+qDone+' (of '+tot+')';$('#qStreak').textContent='🔥 '+qStreak;$('#qMeter').style.width=(qDone/tot*100)+'%'}
+$$('#qFilter .btn').forEach(b=>b.onclick=()=>{qFilter=b.dataset.f;$$('#qFilter .btn').forEach(x=>x.classList.toggle('on',x===b));buildQuiz()});
+$('#qReset').onclick=buildQuiz;buildQuiz();
+
+/* ---------------- boot ---------------- */
+function redrawAll(){drawPPF(false);drawCap();drawMU();drawMarket('d',labState.d);drawMarket('s',labState.s)}
+redrawAll();updateProgress();
+show(hashId()||store.get('econLast','home'));
+})();
+</script>
+</body>
+</html>
